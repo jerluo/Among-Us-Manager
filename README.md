@@ -19,7 +19,7 @@ Among Us Manager uses discord reactions to smoothly manage muting and deafening.
 
 &nbsp;
 
-*Unfortunately due to discord bot limitations only 10 voice edits are allowed every 5 seconds per server, freezing the bot if multiple games in a single server change stage at once*
+*Unfortunately due to discord bot limitations, only 10 voice edits are allowed every 5 seconds per server, freezing the bot if multiple games in a single server change stage at once*
 
 ## Commands
 Start Command | Starting description
