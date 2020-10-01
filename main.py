@@ -24,7 +24,7 @@ client.remove_command('help')
 
 games = {}
 
-#KEY = os.environ.get('KEY')
+KEY = os.environ.get('KEY')
 
 
 """
@@ -567,5 +567,4 @@ async def help(ctx):
     await ctx.send(embed=embed)
 
 
-#client.run(KEY)
-client.run('NzU2NzQzMDMzMTgxMDQ0ODI3.X2WR3g.fuaJvbL_v45KVzMrmDHIcMM5uZw')
+client.run(KEY)
