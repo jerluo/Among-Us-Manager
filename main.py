@@ -9,15 +9,6 @@ from objects import Player
 from objects import Stage
 from discord.ext import commands
 
-"""
-    TO-DO:
-
-    Heroku
-    Github
-    top.gg
-
-"""
-
 
 client = commands.Bot(command_prefix = 'am.')
 client.remove_command('help')
