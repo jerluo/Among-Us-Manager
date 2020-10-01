@@ -35,6 +35,7 @@ class Game:
         self.host = Player(host)
         self.stage = Stage.Lobby
         self.players = {str(self.host) : self.host}
+        self.playerNumber = len(self.players)
         self.msg = None
         self.timestamp = datetime.datetime.now()
 
@@ -66,10 +67,19 @@ class Game:
         self.host = player
 
     def getInterface(self):
+        if self.stage == Stage.Lobby:
+            emoji = "⏮"
+        elif self.stage == Stage.Round:
+            emoji = "🔇"
+        elif self.stage == Stage.Meeting:
+            emoji = "📢"
+
         embed = discord.Embed(
             colour = discord.Colour.orange(),
             title = 'Among Us Manager',
-            description = "**Voice Channel:** " + self.voiceChannel.name + "\n" +  "**Game stage:** " + self.stage.name + "\n",
+            description = "🔊 **Voice Channel:** " + self.voiceChannel.name +
+                   "\n" + "👥 **Player Count:** " + str(self.playerNumber) +
+                   "\n" + emoji + " **Game stage:** " + self.stage.name,
             timestamp = self.timestamp
         )
 

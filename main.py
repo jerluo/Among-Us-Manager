@@ -9,12 +9,22 @@ from objects import Player
 from objects import Stage
 from discord.ext import commands
 
+"""
+    TO-DO:
+
+    Heroku
+    Github
+    top.gg
+
+"""
+
+
 client = commands.Bot(command_prefix = 'am.')
 client.remove_command('help')
 
 games = {}
 
-KEY = os.environ.get('KEY')
+#KEY = os.environ.get('KEY')
 
 
 """
@@ -70,6 +80,7 @@ async def on_reaction_add(reaction, user):
 '''
     Commands: start - start game
               join - join game
+              joinall - join everyone in vc
               dead - set dead
               round - change to round
               meeting - change to meeting
@@ -142,13 +153,69 @@ async def join(ctx):
     #Add player
     game.addPlayer(member)
 
-    #Delete previous embed
-    msg = game.getMsg()
-    await msg.delete()
+    try:
+        #Delete previous embed
+        msg = game.getMsg()
+        await msg.delete()
 
-    #Send embed
-    textChannel = game.getText()
-    await sendEmbed(game, textChannel)
+        #Send embed
+        textChannel = game.getText()
+        await sendEmbed(game, textChannel)
+
+    except Exception as e:
+        print(e)
+
+@client.command()
+async def joinall(ctx):
+    try:
+        voiceChannel = ctx.message.author.voice.channel
+    except:
+        return
+
+    member = ctx.message.author
+
+    game, player = gameRequirements(member, voiceChannel)
+    if game is False:
+        await ctx.send("Game doesn't exist. Type `am.start` to start a game.")
+        return
+
+    if player is not game.getHost():
+        await ctx.send("Only host can join all.")
+        return
+
+    #List of all members in channel
+    members = voiceChannel.members
+
+    #Remove all bots
+    for member in members:
+        if member.bot == True:
+            members.remove(member)
+
+    if len(members) >= 10:
+        await ctx.send("Failed: More than 10 people are in the voice channel.")
+        return
+
+    for member in members:
+        player = game.getPlayer(member)
+        #If player is already in the game
+        if player is not False:
+            continue
+
+        else:
+            #Add player
+            game.addPlayer(member)
+
+    try:
+        #Delete previous embed
+        msg = game.getMsg()
+        await msg.delete()
+
+        #Send embed
+        textChannel = game.getText()
+        await sendEmbed(game, textChannel)
+
+    except Exception:
+        pass
 
 @client.command()
 async def dead(ctx):
@@ -398,8 +465,8 @@ async def changeStage(member, voiceChannel, stage):
                 await textChannel.send("Failed")
                 print(e)
 
-            await sendEmbed(game, textChannel)
-            return
+            continue
+
 
     if stage == Stage.Lobby:
         game.setAllAlive()
@@ -481,6 +548,7 @@ async def help(ctx):
     #Starting commands
     embed.add_field(name='Getting started:',value='''`am.start` - host new game in current voice channel. Only one game is allowed in each voice channel.
                                                   \n`am.join` - joins existing game in voice channel.
+                                                  \n`am.joinall` - joins everyone in the voice channel into the game.
                                                   \n`am.endgame` - terminates existing game in voice channel. Only players in the game are able to use this command during a 6 hour time period after game is created. ''', inline = False)
 
     #Host game commands
@@ -499,4 +567,5 @@ async def help(ctx):
     await ctx.send(embed=embed)
 
 
-client.run(KEY)
+#client.run(KEY)
+client.run('NzU2NzQzMDMzMTgxMDQ0ODI3.X2WR3g.fuaJvbL_v45KVzMrmDHIcMM5uZw')
