@@ -3,7 +3,7 @@
 
 [![Bot Image](https://i.imgur.com/K6V81tr.png)](https://discord.com/api/oauth2/authorize?client_id=756743033181044827&permissions=12787776&scope=bot)
 
-Among Us Manager is a discord bot using reactions to manage muting and deafening in Among Us, allowing you listen to everyone alive during the round when you're dead.
+Among Us Manager is a discord bot using reactions to manage muting and deafening in Among Us, allowing you listen to live reactions during the round while you're dead.
 
 [![Invite Link](https://i.imgur.com/zkYVDa9.png)](https://discord.com/api/oauth2/authorize?client_id=756743033181044827&permissions=12787776&scope=bot)
 </div>
@@ -14,8 +14,11 @@ Among Us Manager is a discord bot using reactions to manage muting and deafening
 Among Us Manager uses discord reactions to smoothly manage muting and deafening. After creating a game, use the reactions under the embed to control the game. Because the bot deafens everyone alive, dead people can hear the thoughts of everyone alive, or the screams of someone dying.
 
 &nbsp;
+<div align="center">
 
-<div style="text-align:center"><img src="https://i.imgur.com/50kbgh6.png" /></div>
+<img src="https://i.imgur.com/50kbgh6.png">
+
+</div>
 
 &nbsp;
 

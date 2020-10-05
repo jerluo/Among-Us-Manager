@@ -67,9 +67,7 @@ class Game:
         self.host = player
 
     def getInterface(self):
-
         self.playerNumber = len(self.players)
-        
         if self.stage == Stage.Lobby:
             emoji = "⏮"
         elif self.stage == Stage.Round:
