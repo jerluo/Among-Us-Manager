@@ -14,6 +14,7 @@ Among Us Manager is a discord bot using reactions to manage muting and deafening
 Among Us Manager uses discord reactions to smoothly manage muting and deafening. After creating a game, use the reactions under the embed to control the game. Because the bot deafens everyone alive, dead people can hear the thoughts of everyone alive, or the screams of someone dying.
 
 &nbsp;
+
 <div align="center">
 
 <img src="https://i.imgur.com/50kbgh6.png">
@@ -23,6 +24,20 @@ Among Us Manager uses discord reactions to smoothly manage muting and deafening.
 &nbsp;
 
 *Unfortunately due to discord bot limitations, only 10 voice edits are allowed every 5 seconds per server, freezing the bot if multiple games in a single server change stage at once*
+
+## Wiki
+
+Up your game knowledge with detailed map diagrams and tips from the official Among Us Wiki. Use these commands to get info straight from the bot into your discord server and win more games!
+
+&nbsp;
+
+<div align="center">
+
+<img src="https://i.imgur.com/6EYXncT.png">
+
+</div>
+
+&nbsp;
 
 ## Commands
 Start Command | Starting description
@@ -41,3 +56,7 @@ Start Command | Starting description
 `am.promote <@user>` | Promotes player to host  **Host only**
 `am.kick <@user>` | Removes player from game
 `am.leave` | Leave game
+**Wiki Commands** | **Wiki description**
+`am.wiki` | link to the official Among Us Fandom Wiki.
+`am.map <map>` | image of map with vents, common tasks, and more
+`am.tip <imposter OR crewmate>` | returns random tip for either the imposter or crewmate.

@@ -40,12 +40,20 @@ async def help(ctx):
                                                         \n`am.lobby   or ⏮` - end of game, back to lobby. Undeafens and unmutes everyone.''', inline = False)
 
     #Player game commands
-    embed.add_field(name='Player game commands:',value='''`am.dead or ☠` - toggle status to dead. Undeafens during rounds to discuss with other dead players and hear other players alive''', inline = False)
+    embed.add_field(name='Player game commands:',value='''`am.dead or ☠` - toggle status to dead. Undeafens during rounds to discuss with other dead players and hear other players alive.''', inline = False)
 
     #Management commands
-    embed.add_field(name='Management commands:', value ='''`am.promote <@user>` - Promotes player to host. **Host only**
+    embed.add_field(name='Management commands:', value ='''`am.promote <@user>` - promotes player to host. **Host only**
                                                          \n`am.kick <@user>` - removes player from game.
                                                          \n`am.leave` - leave game.''', inline = False)
+
+    embed.add_field(name='Wiki commands:', value = '''`am.wiki` - link to the official Among Us Fandom Wiki.
+                                                    \n`am.map <map>` - image of map with vents, common tasks, and more.
+                                                    \n`am.tip <imposter OR crewmate>` - returns random tip for either the imposter or crewmate.''', inline = False)
+
+    embed.add_field(name="Information:", value = "`am.info` - github link and invite link")
+
+    embed.set_footer(text='Created by Jerry#59292')
 
     await ctx.send(embed=embed)
 

@@ -150,7 +150,7 @@ class StartCommands(commands.Cog):
             if member.bot == True:
                 members.remove(member)
 
-        if len(members) >= 10:
+        if len(members) > 10:
             await ctx.send("Failed: More than 10 people are in the voice channel.")
             return
 

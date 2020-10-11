@@ -63,5 +63,31 @@ class Events(commands.Cog):
         if reaction == '⏮':
             await gamecommand.changeStage(member, voiceChannel, Stage.Lobby)
 
+    @commands.Cog.listener()
+    async def on_command_error(self, ctx, error):
+
+        # This prevents any commands with local handlers being handled here in on_command_error.
+        if hasattr(ctx.command, 'on_error'):
+            return
+
+        # This prevents any cogs with an overwritten cog_command_error being handled here.
+        cog = ctx.cog
+        if cog:
+            if cog._get_overridden_method(cog.cog_command_error) is not None:
+                return
+
+        ignored = (commands.CommandNotFound, )
+
+        # Allows us to check for original exceptions raised and sent to CommandInvokeError.
+        # If nothing is found. We keep the exception passed to on_command_error.
+        error = getattr(error, 'original', error)
+
+        if isinstance(error, ignored):
+            return
+
+        else:
+            print(error)
+            return
+
 def setup(bot):
     bot.add_cog(Events(bot))

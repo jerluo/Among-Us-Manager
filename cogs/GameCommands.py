@@ -109,21 +109,23 @@ class GameCommands(commands.Cog):
             status = player.isAlive()
             member = player.getMember()
 
+
             #Try to change voice states
             try:
                 if status == True:
                     await member.edit(deafen = aliveBool)
                 elif status == False:
                     await member.edit(mute = deadBool)
-            except Exception as e:
-                if isinstance(e, discord.errors.HTTPException):
-                    mention = member.mention
-                    await textChannel.send("Error! " + mention + " is not in the voice channel.\nType `am.kick @user` to remove a player.\n")
-                else:
-                    await textChannel.send("Failed")
-                    print(e)
+            except discord.errors.Forbidden:
+                await textChannel.send("Missing Permissions! Reinvite the bot or give back roles.")
+                return
 
+            except discord.errors.HTTPException:
+                mention = member.mention
+                await textChannel.send("Error! " + mention + " is not in the voice channel.\nType `am.kick @user` to remove a player.\n")
                 continue
+            except Exception as e:
+                print(e)
 
 
         if stage == Stage.Lobby:
