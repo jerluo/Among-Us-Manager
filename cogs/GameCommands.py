@@ -85,7 +85,12 @@ class GameCommands(commands.Cog):
 
         #Delete prior message
         msg = game.getMsg()
-        await msg.delete()
+
+        try:
+            await msg.delete()
+        except:
+            pass
+
 
         #If lobby
         if stage == Stage.Lobby:

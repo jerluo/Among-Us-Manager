@@ -81,7 +81,10 @@ class StartCommands(commands.Cog):
         del games[voiceChannel]
 
         msg = game.getMsg()
-        await msg.delete()
+        try:
+            await msg.delete()
+        except:
+            pass
 
         await ctx.send("Game in `" + str(voiceChannel) + "` ended.")
 
@@ -115,12 +118,12 @@ class StartCommands(commands.Cog):
             msg = game.getMsg()
             await msg.delete()
 
-            #Send embed
-            textChannel = game.getText()
-            await manage.sendEmbed(game, textChannel)
+        except:
+            pass
 
-        except Exception as e:
-            return
+        #Send embed
+        textChannel = game.getText()
+        await manage.sendEmbed(game, textChannel)
 
     @commands.command()
     async def joinall(self, ctx):
@@ -169,13 +172,12 @@ class StartCommands(commands.Cog):
             msg = game.getMsg()
             await msg.delete()
 
-            #Send embed
-            textChannel = game.getText()
-            await manage.sendEmbed(game, textChannel)
+        except:
+            pass
 
-        except Exception:
-            return
-
+        #Send embed
+        textChannel = game.getText()
+        await manage.sendEmbed(game, textChannel)
 
 def setup(bot):
     bot.add_cog(StartCommands(bot))
