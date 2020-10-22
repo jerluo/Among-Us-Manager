@@ -48,14 +48,6 @@ class StartCommands(commands.Cog):
 
         addGame(game)
 
-    @start.error
-    async def self_error(self, ctx, error):
-        if isinstance(error, commands.MissingRequiredArgument):
-            msg = "type `am.code <code>`"
-            await self.start(ctx, msg)
-        else:
-            print(error)
-
     @commands.command()
     async def endgame(self, ctx):
         try:

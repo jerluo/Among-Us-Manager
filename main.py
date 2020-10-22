@@ -9,7 +9,8 @@ from discord.ext import commands
 client = commands.Bot(command_prefix = 'am.')
 client.remove_command('help')
 
-KEY = os.environ.get('KEY')
+#KEY = os.environ.get('KEY')
+KEY = r'NzM1MjM5NDQyMTkyNjYyNTM5.XxdXFw.tLbEnWh69Upe_pOUF-IiOVDEFHM'
 
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):

@@ -1,3 +1,4 @@
+import random
 import discord
 from discord.ext import commands
 
@@ -66,7 +67,7 @@ class Events(commands.Cog):
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
 
-        # This prevents any commands with local handlers being handled here in on_command_error.
+        #This prevents any commands with local handlers being handled here in on_command_error.
         if hasattr(ctx.command, 'on_error'):
             return
 
@@ -94,6 +95,65 @@ class Events(commands.Cog):
             guild = ctx.guild.name
 
             await channel.send('Missing permissions in server: `' + guild + '`\nReinvite bot to regain bot permissions. Use `am.info` to get invite link.')
+
+        elif 'Unknown Message' in str(error):
+            manage = self.client.get_cog('ManagementCommands')
+            await manage.update(ctx)
+
+        elif isinstance(error, commands.MissingRequiredArgument):
+            command = str(ctx.command)
+            if command == 'start':
+                startCommand = self.client.get_cog('StartCommands')
+                msg = "type `am.code <code>`"
+
+                try:
+                    await startCommand.start(ctx, msg)
+                except Exception as e:
+                    if 'Missing Permissions' in str(e):
+                        try:
+                            channel = ctx.author.dm_channel()
+                        except:
+                            channel = await ctx.author.create_dm()
+
+                        guild = ctx.guild.name
+
+                        await channel.send('Missing permissions in server: `' + guild + '`\nReinvite bot to regain bot permissions. Use `am.info` to get invite link.')
+
+            elif command == 'tip':
+                choice = random.randint(1, 2)
+                info = self.client.get_cog('InformationCommands')
+                
+                try:
+                    if choice == 1:
+                        await ctx.send('**Imposter Tip:**')
+                        await info.tip(ctx, "imposter")
+                    else:
+                        await ctx.send('**Crewmate Tip:**')
+                        await info.tip(ctx, "crewmate")
+                except Exception as e:
+                    if 'Missing Permissions' in str(e):
+                        try:
+                            channel = ctx.author.dm_channel()
+                        except:
+                            channel = await ctx.author.create_dm()
+
+                        guild = ctx.guild.name
+
+                        await channel.send('Missing permissions in server: `' + guild + '`\nReinvite bot to regain bot permissions. Use `am.info` to get invite link.')
+
+            else:
+                try:
+                    await ctx.send('am.' + command + ' requires additional arguments')
+                except Exception as e:
+                    if 'Missing Permissions' in str(e):
+                        try:
+                            channel = ctx.author.dm_channel()
+                        except:
+                            channel = await ctx.author.create_dm()
+
+                        guild = ctx.guild.name
+
+                        await channel.send('Missing permissions in server: `' + guild + '`\nReinvite bot to regain bot permissions. Use `am.info` to get invite link.')
 
         else:
             print(error)

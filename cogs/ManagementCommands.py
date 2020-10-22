@@ -95,7 +95,10 @@ class ManagementCommands(commands.Cog):
     @kick.error
     async def kick_error(self, ctx, error):
         if isinstance(error, commands.BadArgument):
-            await ctx.send("Invalid member. Type `am.kick <@user>` to remove a player.")
+            try:
+                await ctx.send("Invalid member. Type `am.kick <@user>` to remove a player.")
+            except:
+                return
         else:
             print(error)
 
@@ -134,7 +137,10 @@ class ManagementCommands(commands.Cog):
     @promote.error
     async def promote_error(self, ctx, error):
         if isinstance(error, commands.BadArgument):
-            await ctx.send("Invalid member. Type `am.promote <@user>` to promote a player.")
+            try:
+                await ctx.send("Invalid member. Type `am.promote <@user>` to promote a player.")
+            except:
+                return
         else:
             print(error)
 

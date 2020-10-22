@@ -47,13 +47,6 @@ class InformationCommands(commands.Cog):
 
         await ctx.send(embed=embed)
 
-    @_map.error
-    async def map_error(self, ctx, error):
-        if isinstance(error, commands.MissingRequiredArgument):
-            await ctx.send('Type `am.map <map>`. Missing either skeld, mira, or polus.')
-        else:
-            print(error)
-
     @commands.command(aliases=['tips'])
     async def tip(self, ctx, group):
 
@@ -67,21 +60,6 @@ class InformationCommands(commands.Cog):
             tip = '`' + group + '` is not valid. Use `am.tip imposter` or `am.tip crewmate`'
 
         await ctx.send(tip)
-
-    @tip.error
-    async def tip_error(self, ctx, error):
-        if isinstance(error, commands.MissingRequiredArgument):
-            choice = random.randint(1, 2)
-            if choice == 1:
-                tip = '**Imposter Tip:**\n' + random.choice(self.imposterTips)
-            else:
-                tip = '**Crewmate Tip:**\n' + random.choice(self.crewmateTips)
-
-            await ctx.send(tip)
-
-        else:
-            print(error)
-
 
 
 def setup(bot):
