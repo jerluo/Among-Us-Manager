@@ -85,6 +85,16 @@ class Events(commands.Cog):
         if isinstance(error, ignored):
             return
 
+        elif 'Missing Permissions' in str(error):
+            try:
+                channel = ctx.author.dm_channel()
+            except:
+                channel = await ctx.author.create_dm()
+
+            guild = ctx.guild.name
+
+            await channel.send('Missing permissions in server: `' + guild + '`\nReinvite bot to regain bot permissions. Use `am.info` to get invite link.')
+
         else:
             print(error)
             return

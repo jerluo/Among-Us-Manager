@@ -23,6 +23,29 @@ class GameCommands(commands.Cog):
     '''
 
     @commands.command()
+    async def code(self, ctx, code):
+        try:
+            voiceChannel = ctx.message.author.voice.channel
+        except:
+            return
+
+        member = ctx.message.author
+
+
+        game, player = gameRequirements(member, voiceChannel)
+        if game is False or player is False:
+            await ctx.send("Create a game with `am.start`")
+            return
+
+        if player is not game.getHost():
+            return
+
+        game.setCode(code)
+        manage = self.client.get_cog('ManagementCommands')
+        textChannel = game.getText()
+        await manage.sendEmbed(game, textChannel)
+
+    @commands.command()
     async def dead(self, ctx):
         try:
             voiceChannel = ctx.message.author.voice.channel
@@ -85,12 +108,7 @@ class GameCommands(commands.Cog):
 
         #Delete prior message
         msg = game.getMsg()
-
-        try:
-            await msg.delete()
-        except:
-            pass
-
+        await msg.delete()
 
         #If lobby
         if stage == Stage.Lobby:

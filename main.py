@@ -9,7 +9,8 @@ from discord.ext import commands
 client = commands.Bot(command_prefix = 'am.')
 client.remove_command('help')
 
-KEY = os.environ.get('KEY')
+#KEY = os.environ.get('KEY')
+KEY = r'NzM1MjM5NDQyMTkyNjYyNTM5.XxdXHA.ThS64eXsi0drt-v4o-BjdtiPFz0'
 
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
@@ -29,7 +30,7 @@ async def help(ctx):
     embed.set_author(name = '[Among Us Manager] Commands:')
 
     #Starting commands
-    embed.add_field(name='Getting started:',value='''`am.start` - host new game in current voice channel. Only one game is allowed in each voice channel.
+    embed.add_field(name='Getting started:',value='''`am.start <code>` - host new game in current voice channel. Only one game is allowed in each voice channel.
                                                   \n`am.join` - joins existing game in voice channel.
                                                   \n`am.joinall` - joins everyone in the voice channel into the game.
                                                   \n`am.endgame` - terminates existing game in voice channel. Only players in the game are able to use this command during a 6 hour time period after game is created. ''', inline = False)
@@ -37,7 +38,8 @@ async def help(ctx):
     #Host game commands
     embed.add_field(name='Host game commands:',value='''\n`am.round   or 🔇` - start the round (tasks). Deafens alive, unmutes dead.
                                                         \n`am.meeting or 📢` - call a meeting. Undeafens alive, mutes dead.
-                                                        \n`am.lobby   or ⏮` - end of game, back to lobby. Undeafens and unmutes everyone.''', inline = False)
+                                                        \n`am.lobby   or ⏮` - end of game, back to lobby. Undeafens and unmutes everyone.
+                                                        \n`am.code <code>` - change the code displayed on the interface''', inline = False)
 
     #Player game commands
     embed.add_field(name='Player game commands:',value='''`am.dead or ☠` - toggle status to dead. Undeafens during rounds to discuss with other dead players and hear other players alive.''', inline = False)
@@ -53,7 +55,7 @@ async def help(ctx):
 
     embed.add_field(name="Information:", value = "`am.info` - github link and invite link")
 
-    embed.set_footer(text='Created by Jerry#59292')
+    embed.set_footer(text='Created by Jerry#5922')
 
     await ctx.send(embed=embed)
 

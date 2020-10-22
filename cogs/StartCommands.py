@@ -22,7 +22,7 @@ class StartCommands(commands.Cog):
     '''
 
     @commands.command()
-    async def start(self, ctx):
+    async def start(self, ctx, code):
         try:
             voiceChannel = ctx.message.author.voice.channel
         except:
@@ -42,11 +42,19 @@ class StartCommands(commands.Cog):
         textChannel = ctx.message.channel
 
         #Create game
-        game = Game(voiceChannel, textChannel, host)
+        game = Game(voiceChannel, textChannel, host, code)
         #Send game
         await manage.sendEmbed(game, textChannel)
 
         addGame(game)
+
+    @start.error
+    async def self_error(self, ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            msg = "type `am.code <code>`"
+            await self.start(ctx, msg)
+        else:
+            print(error)
 
     @commands.command()
     async def endgame(self, ctx):
@@ -81,10 +89,7 @@ class StartCommands(commands.Cog):
         del games[voiceChannel]
 
         msg = game.getMsg()
-        try:
-            await msg.delete()
-        except:
-            pass
+        await msg.delete()
 
         await ctx.send("Game in `" + str(voiceChannel) + "` ended.")
 
@@ -118,12 +123,12 @@ class StartCommands(commands.Cog):
             msg = game.getMsg()
             await msg.delete()
 
-        except:
-            pass
+            #Send embed
+            textChannel = game.getText()
+            await manage.sendEmbed(game, textChannel)
 
-        #Send embed
-        textChannel = game.getText()
-        await manage.sendEmbed(game, textChannel)
+        except Exception as e:
+            return
 
     @commands.command()
     async def joinall(self, ctx):
@@ -172,12 +177,13 @@ class StartCommands(commands.Cog):
             msg = game.getMsg()
             await msg.delete()
 
-        except:
-            pass
+            #Send embed
+            textChannel = game.getText()
+            await manage.sendEmbed(game, textChannel)
 
-        #Send embed
-        textChannel = game.getText()
-        await manage.sendEmbed(game, textChannel)
+        except Exception:
+            return
+
 
 def setup(bot):
     bot.add_cog(StartCommands(bot))

@@ -29,7 +29,7 @@ class Player:
 
 class Game:
 
-    def __init__(self, voiceChannel, textChannel, host):
+    def __init__(self, voiceChannel, textChannel, host, code):
         self.voiceChannel = voiceChannel
         self.textChannel = textChannel
         self.host = Player(host)
@@ -38,6 +38,7 @@ class Game:
         self.playerNumber = len(self.players)
         self.msg = None
         self.timestamp = datetime.datetime.now()
+        self.code = code
 
     def getTime(self):
         return self.timestamp
@@ -66,6 +67,9 @@ class Game:
     def setHost(self, player):
         self.host = player
 
+    def setCode(self, code):
+        self.code = code
+
     def getInterface(self):
         self.playerNumber = len(self.players)
         if self.stage == Stage.Lobby:
@@ -77,7 +81,7 @@ class Game:
 
         embed = discord.Embed(
             colour = discord.Colour.orange(),
-            title = 'Among Us Manager',
+            title = "Game Code: " + self.code,
             description = "🔊 **Voice Channel:** " + self.voiceChannel.name +
                    "\n" + "👥 **Player Count:** " + str(self.playerNumber) +
                    "\n" + emoji + " **Game stage:** " + self.stage.name,
