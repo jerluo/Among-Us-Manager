@@ -53,15 +53,15 @@ class Events(commands.Cog):
             await gamecommand.changeDead(member, voiceChannel)
 
         #Meeting reaction
-        if reaction == '📢':
+        elif reaction == '📢':
             await gamecommand.changeStage(member, voiceChannel, Stage.Meeting)
 
         #Mute reaction
-        if reaction == '🔇':
+        elif reaction == '🔇':
             await gamecommand.changeStage(member, voiceChannel, Stage.Round)
 
         #Meeting reaction
-        if reaction == '⏮':
+        elif reaction == '⏮':
             await gamecommand.changeStage(member, voiceChannel, Stage.Lobby)
 
     @commands.Cog.listener()
@@ -156,7 +156,7 @@ class Events(commands.Cog):
                         await channel.send('Missing permissions in server: `' + guild + '`\nReinvite bot to regain bot permissions. Use `am.info` to get invite link.')
 
         else:
-            print(ctx.command + ": " + error)
+            print(str(ctx.command) + ": " + str(error))
             return
 
 def setup(bot):

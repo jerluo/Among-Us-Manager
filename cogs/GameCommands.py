@@ -110,14 +110,9 @@ class GameCommands(commands.Cog):
             #Delete prior message
             msg = game.getMsg()
             await msg.delete()
-        except Exception as e:
-            if "Unknown Message" in str(e):
-                manage = self.client.get_cog('ManagementCommands')
-                await manage.update(ctx)
-            else:
-                print(e)
-                pass
-
+        except:
+            pass
+    
         #If lobby
         if stage == Stage.Lobby:
             aliveBool = False
