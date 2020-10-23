@@ -106,9 +106,17 @@ class GameCommands(commands.Cog):
         if player is not game.getHost():
             return
 
-        #Delete prior message
-        msg = game.getMsg()
-        await msg.delete()
+        try:
+            #Delete prior message
+            msg = game.getMsg()
+            await msg.delete()
+        except Exception as e:
+            if "Unknown Message" in str(e):
+                manage = self.client.get_cog('ManagementCommands')
+                await manage.update(ctx)
+            else:
+                print(e)
+                pass
 
         #If lobby
         if stage == Stage.Lobby:

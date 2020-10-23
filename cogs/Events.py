@@ -122,7 +122,7 @@ class Events(commands.Cog):
             elif command == 'tip':
                 choice = random.randint(1, 2)
                 info = self.client.get_cog('InformationCommands')
-                
+
                 try:
                     if choice == 1:
                         await ctx.send('**Imposter Tip:**')
@@ -156,7 +156,7 @@ class Events(commands.Cog):
                         await channel.send('Missing permissions in server: `' + guild + '`\nReinvite bot to regain bot permissions. Use `am.info` to get invite link.')
 
         else:
-            print(error)
+            print(ctx.command + ": " + error)
             return
 
 def setup(bot):
