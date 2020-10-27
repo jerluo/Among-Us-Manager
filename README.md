@@ -3,41 +3,27 @@
 
 [![Bot Image](https://i.imgur.com/K6V81tr.png)](https://discord.com/api/oauth2/authorize?client_id=756743033181044827&permissions=12787776&scope=bot)
 
-Among Us Manager is a discord bot using reactions to manage muting and deafening in Among Us, allowing you listen to live reactions during the round while you're dead.
+Among Us Manager is the only discord bot you need to smoothly control the muting straight from inside Discord, with tons of extra quality of life features!
 
 [![Invite Link](https://i.imgur.com/zkYVDa9.png)](https://discord.com/api/oauth2/authorize?client_id=756743033181044827&permissions=12787776&scope=bot)
 </div>
 
 &nbsp;
 
+# Features
+
+## Interface
+![](https://i.imgur.com/q9DFf6S.gif)
 ## Reactions
-Among Us Manager uses discord reactions to smoothly manage muting and deafening. After creating a game, use the reactions under the embed to control the game. Because the bot deafens everyone alive, dead people can hear the thoughts of everyone alive, or the screams of someone dying.
-
-&nbsp;
-
-<div align="center">
-
-<img src="https://i.imgur.com/50kbgh6.png">
-
-</div>
-
-&nbsp;
-
-*Unfortunately due to discord bot limitations, only 10 voice edits are allowed every 5 seconds per server, freezing the bot if multiple games in a single server change stage at once*
-
+![](https://i.imgur.com/0v0cswD.gif)
+## Spectate
+![](https://i.imgur.com/hyU0tuw.gif)
 ## Wiki
+![](https://i.imgur.com/Na4YAsh.gif)
 
-Up your game knowledge with detailed map diagrams and tips from the official Among Us Wiki. Use these commands to get info straight from the bot into your discord server and win more games!
 
-&nbsp;
 
-<div align="center">
 
-<img src="https://i.imgur.com/6EYXncT.png">
-
-</div>
-
-&nbsp;
 
 ## Commands
 Start Command | Starting description
