@@ -13,13 +13,16 @@ Among Us Manager is the only discord bot you need to smoothly control the muting
 # Features
 
 ## Interface
-![](https://i.imgur.com/q9DFf6S.gif)
+<img src='./demos/slide1.gif'>
+
 ## Reactions
-![](https://i.imgur.com/0v0cswD.gif)
+<img src='./demos/slide2.gif'>
+
 ## Spectate
-![](https://i.imgur.com/hyU0tuw.gif)
+<img src='./demos/slide3.gif'>
+
 ## Wiki
-![](https://i.imgur.com/Na4YAsh.gif)
+<img src='./demos/slide4.gif'>
 
 
 
