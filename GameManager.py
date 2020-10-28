@@ -5,7 +5,7 @@ games = {}
 #Returns game if exists, if not returns false
 def gameExist(voiceChannel):
     #Check dictionary
-    if voiceChannel in games.keys():
+    if voiceChannel in list(games.keys()):
         return games[voiceChannel]
     else:
         return False
