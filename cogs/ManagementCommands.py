@@ -164,10 +164,17 @@ class ManagementCommands(commands.Cog):
     async def sendEmbed(self, game, textChannel):
 
         msg = await textChannel.send(embed=game.getInterface())
-        await msg.add_reaction('☠')
-        await msg.add_reaction('🔇')
-        await msg.add_reaction('📢')
-        await msg.add_reaction('⏮')
+
+        try:
+            await msg.add_reaction('☠')
+            await msg.add_reaction('🔇')
+            await msg.add_reaction('📢')
+            await msg.add_reaction('⏮')
+        except Exception as e:
+            if "Missing Permissions" in str(e):
+                await textChannel.send('Missing permissions (most likely sending reactions), try reinviting the bot.')
+            else:
+                await textChannel.send('Unexpected error! Try `am.update` if interface is missing.')
 
         game.prevMsg(msg)
 

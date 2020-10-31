@@ -24,6 +24,10 @@ class InformationCommands(commands.Cog):
         await ctx.send(r"https://github.com/jerryluoaustin/Among-Us-Manager")
 
     @commands.command()
+    async def vote(self, ctx):
+        await ctx.send(r"https://top.gg/bot/756743033181044827/vote")
+
+    @commands.command()
     async def wiki(self, ctx):
         await ctx.send(r'https://among-us.fandom.com/wiki/Among_Us_Wiki')
 

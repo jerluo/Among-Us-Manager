@@ -52,7 +52,8 @@ async def help(ctx):
                                                     \n`am.map <map>` - image of map with vents, common tasks, and more.
                                                     \n`am.tip <imposter OR crewmate>` - returns random tip for either the imposter or crewmate.''', inline = False)
 
-    embed.add_field(name="Information:", value = "`am.info` - github link and invite link")
+    embed.add_field(name="Information:", value = '''`am.info` - github link and invite link.
+                                                  \n`am.vote` - vote to support the bot!''')
 
     embed.set_footer(text='Created by Jerry#5922')
 
