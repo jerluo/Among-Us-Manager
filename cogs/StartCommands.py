@@ -145,6 +145,7 @@ class StartCommands(commands.Cog):
         #List of all members in channel
         members = voiceChannel.members
 
+        print(members)
         if not members:
             await ctx.send("Unfortunately due to a bot restart, `am.joinall` is broken. To fix this, switch voice channels (or leave and join the same one), OR have everyone manually type `am.join`.")
             return
