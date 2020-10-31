@@ -145,14 +145,14 @@ class StartCommands(commands.Cog):
         #List of all members in channel
         members = voiceChannel.members
 
-        print(members)
+        if not members:
+            await ctx.send("Unfortunately due to a bot restart, `am.joinall` is broken. To fix this, switch voice channels (or leave and join the same one), OR have everyone manually type `am.join`.")
+            return
 
         #Remove all bots
         for member in members:
             if member.bot == True:
                 members.remove(member)
-
-        print(members)
 
         if len(members) > 10:
             await ctx.send("Failed: More than 10 people are in the voice channel.")
