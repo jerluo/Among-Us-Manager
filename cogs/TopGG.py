@@ -1,3 +1,4 @@
+import os
 import dbl
 import discord
 from discord.ext import commands
