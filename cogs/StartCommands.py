@@ -162,7 +162,7 @@ class StartCommands(commands.Cog):
         playerList = game.getAllPlayers()
 
         for player in list(playerList):
-            if str(player) is not str(member):
+            if player.getMember() is not member:
                 game.removePlayer(player)
 
         #Now add everyone back
