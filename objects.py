@@ -125,4 +125,6 @@ class Game:
             player.setAlive(True)
 
     def removePlayer(self, player):
+        if player == self.host:
+            return
         del self.players[str(player)]
