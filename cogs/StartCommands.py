@@ -163,7 +163,7 @@ class StartCommands(commands.Cog):
 
         for player in list(playerList):
             if player.getMember() is not member:
-                print(player + " removed")
+                print(player)
                 game.removePlayer(player)
 
         #Now add everyone back
