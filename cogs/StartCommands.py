@@ -160,7 +160,8 @@ class StartCommands(commands.Cog):
 
         #Kick everyone except host first
         playerList = game.getAllPlayers()
-        for player in playerList:
+
+        for player in list(playerList):
             if str(player) is not str(member):
                 game.removePlayer(player)
 
