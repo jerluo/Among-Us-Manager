@@ -48,7 +48,7 @@ class StartCommands(commands.Cog):
 
         addGame(game)
 
-    @commands.command()
+    @commands.command(aliases=['end', 'stop'])
     async def endgame(self, ctx):
         try:
             voiceChannel = ctx.message.author.voice.channel
@@ -158,9 +158,10 @@ class StartCommands(commands.Cog):
             await ctx.send("Failed: More than 10 people are in the voice channel.")
             return
 
-        #Kick everyone except host first
+        #Get all players in game
         playerList = game.getAllPlayers()
 
+        #Kick everyone not including host
         for player in list(playerList):
             game.removePlayer(player)
 

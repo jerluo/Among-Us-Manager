@@ -117,6 +117,7 @@ class Game:
         return False
 
     def getAllPlayers(self):
+        #Returns player type list
         return self.players.values()
 
     def setAllAlive(self):
@@ -125,6 +126,7 @@ class Game:
             player.setAlive(True)
 
     def removePlayer(self, player):
+        #Make sure you can't kick host
         if player == self.host:
             return
         del self.players[str(player)]
