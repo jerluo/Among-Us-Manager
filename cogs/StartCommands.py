@@ -159,7 +159,10 @@ class StartCommands(commands.Cog):
             return
 
         #Kick everyone except host first
-        game.kickAll(member)
+        playerList = game.getAllPlayers
+        for player in playerList:
+            if str(player) is not str(member):
+                self.removePlayer(player)
 
         #Now add everyone back
         for member in members:

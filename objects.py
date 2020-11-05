@@ -126,12 +126,3 @@ class Game:
 
     def removePlayer(self, player):
         del self.players[str(player)]
-
-    def kickAll(self, host):
-        #Kick everyone
-        playerList = self.players.values()
-        for player in playerList:
-            self.removePlayer(player)
-
-        #Add host back to avoid errors
-        self.addPlayer(host)
