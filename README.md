@@ -28,24 +28,25 @@ Among Us Manager is the only discord bot you need to smoothly control the muting
 
 
 
-## Commands
-Start Command | Starting description
+## Commands: `am.help`
+Start Commands | Start description:
 --------|---------
-`am.start` | Host new game a in current voice channel. Only one game is allowed in each voice channel
+`am.start <code>` | Host new game in current voice channel. Only one game is allowed in each voice channel. *Code optional*
 `am.join` | Joins existing game in voice channel
 `am.joinall` | Force joins everyone in the voice channel into the game
 `am.endgame` | Terminates existing game in voice channel. Only players in the game are able to use this command during a 6 hour time period after game is created
-**Host Game Commands** | **Host description**
-`am.round or 🔇` | Start the round (do tasks). Deafens everyone alive, unmutes everyone dead
-`am.meeting or 📢` | Call a meeting. Undeafens everyone alive, mutes everyone dead.
-`am.lobby or ⏮` | End of game, back to lobby. Undeafens and unmutes everyone
-**Player Commands** | **Round description**
-`am.dead or ☠` | Toggle status to dead. Undeafens during rounds to discuss with other dead players and hear other players alive
-**Management Commands** | **Management description**
+**Host Game Commands** | **Host description:** use typed commands or react to the interface
+`am.round or 🔇` | Mute everyone alive (tasks)
+`am.meeting or 📢` | Unmute everyone alive (meeting)
+`am.lobby or ⏮` | Restart game (lobby). Sets everyone alive and unmutes all
+**Player Commands** | **Round description:** players must use this to spectate
+`am.dead or ☠` | Toggle status to dead: lets you hear everyone during rounds.
+**Management Commands** | **Management description:**
 `am.promote <@user>` | Promotes player to host  **Host only**
 `am.kick <@user>` | Removes player from game
-`am.leave` | Leave game
-**Wiki Commands** | **Wiki description**
-`am.wiki` | link to the official Among Us Fandom Wiki.
-`am.map <map>` | image of map with vents, common tasks, and more
-`am.tip <imposter OR crewmate>` | returns random tip for either the imposter or crewmate.
+`am.leave` | Leave the game
+`am.code <code>` | Change the code displayed on the interface
+**Wiki Commands** | **Wiki description:** From the official Among Us Wiki
+`am.wiki` | Link to the official Among Us Fandom Wiki
+`am.map <map>` | Image of map with vents, common tasks, and more
+`am.tip <imposter OR crewmate>` | Returns random tip for either the imposter or crewmate

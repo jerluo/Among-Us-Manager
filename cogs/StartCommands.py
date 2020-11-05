@@ -158,6 +158,10 @@ class StartCommands(commands.Cog):
             await ctx.send("Failed: More than 10 people are in the voice channel.")
             return
 
+        #Kick everyone except host first
+        game.kickAll(member)
+
+        #Now add everyone back
         for member in members:
             player = game.getPlayer(member)
             #If player is already in the game

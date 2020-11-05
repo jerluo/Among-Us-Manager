@@ -37,8 +37,6 @@ class GameCommands(commands.Cog):
             await ctx.send("Create a game with `am.start`")
             return
 
-        if player is not game.getHost():
-            return
 
         game.setCode(code)
         manage = self.client.get_cog('ManagementCommands')
@@ -112,7 +110,7 @@ class GameCommands(commands.Cog):
             await msg.delete()
         except:
             pass
-    
+
         #If lobby
         if stage == Stage.Lobby:
             aliveBool = False
