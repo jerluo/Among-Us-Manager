@@ -19,6 +19,14 @@ class InformationCommands(commands.Cog):
         with open(crew_file, 'r') as reader:
             self.crewmateTips = reader.readlines()
 
+    '''
+        Commands: info - link
+                  vote - link
+                  wiki - link
+                  map - send map
+                  tip - send tip from txtdoc
+    '''
+
     @commands.command()
     async def info(self, ctx):
         await ctx.send(r"https://github.com/jerryluoaustin/Among-Us-Manager")

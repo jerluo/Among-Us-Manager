@@ -37,7 +37,8 @@ async def help(ctx):
     #Host game commands
     embed.add_field(name='Host game commands: if these commands are spammed the bot will slow down',value='''\n`am.round   or 🔇` - mute everyone alive (tasks).
                                                         \n`am.meeting or 📢` - umutes everyone alive (meeting).
-                                                        \n`am.lobby   or ⏮` - restart game (lobby). Sets everyone alive and unmutes all.''', inline = False)
+                                                        \n`am.lobby   or ⏮` - restart game (lobby). Sets everyone alive and unmutes all.
+                                                        \n`am.dead <@user>` - set someone to dead. Players can do this themselves without the <@user> ''', inline = False)
 
     #Player game commands
     embed.add_field(name='Player game commands:',value='''`am.dead or ☠` - toggle status to dead: lets you hear everyone during rounds.''', inline = False)

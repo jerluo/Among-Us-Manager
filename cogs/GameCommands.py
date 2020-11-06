@@ -16,7 +16,8 @@ class GameCommands(commands.Cog):
         self.client = client
 
     '''
-        Commands: dead - set dead
+        Commands: code - set code
+                  dead - set member to dead
                   round - change to round
                   meeting - change to meeting
                   lobby - change to lobby
@@ -44,13 +45,14 @@ class GameCommands(commands.Cog):
         await manage.sendEmbed(game, textChannel)
 
     @commands.command()
-    async def dead(self, ctx):
+    async def dead(self, ctx, member: discord.Member=None):
+        if member is None:
+            member = ctx.message.author
+
         try:
             voiceChannel = ctx.message.author.voice.channel
         except:
             return
-
-        member = ctx.message.author
 
         await self.changeDead(member, voiceChannel)
 
