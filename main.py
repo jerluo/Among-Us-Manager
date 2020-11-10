@@ -5,7 +5,6 @@ import os
 from objects import *
 from discord.ext import commands
 
-
 client = commands.Bot(command_prefix = 'am.')
 client.remove_command('help')
 
@@ -23,16 +22,16 @@ async def ping(ctx):
 async def help(ctx):
     embed = discord.Embed(
         colour = discord.Colour.orange(),
-        description = "***IMPORTANT***: If you're using this bot at around 12AM EST the bot may restart and delete your game while ongoing. Just simply start a new game if it stops working."
+        description = "***IMPORTANT***: If you're using this bot and commands stop working, the game may have ended during a routine bot restart that happens every 24 hours. Simply start a new game to resume."
     )
 
     embed.set_author(name = '[Among Us Manager] Commands:')
 
     #Starting commands
     embed.add_field(name='Getting started:',value='''`am.start <code>` - host new game in current voice channel. Only one game is allowed in each voice channel. *Code optional*
-                                                  \n`am.join` - joins existing game in voice channel.
+                                                  \n`am.join` - joins existing game in the voice channel.
                                                   \n`am.joinall` - joins everyone in the voice channel into the game. *Kicks everyone in the game but not in the voice channel*
-                                                  \n`am.endgame` - terminates existing game in voice channel. Only players in the game are able to use this command during a 6 hour time period after game is created. ''', inline = False)
+                                                  \n`am.endgame` - ends the game in the voice channel. ''', inline = False)
 
     #Host game commands
     embed.add_field(name='Host game commands: if these commands are spammed the bot will slow down',value='''\n`am.round   or 🔇` - mute everyone alive (tasks).
@@ -41,12 +40,13 @@ async def help(ctx):
                                                         \n`am.dead <@user>` - set someone to dead. Players can do this themselves without the <@user> ''', inline = False)
 
     #Player game commands
-    embed.add_field(name='Player game commands:',value='''`am.dead or ☠` - toggle status to dead: lets you hear everyone during rounds.''', inline = False)
+    embed.add_field(name='Player game commands:',value='''`am.dead or ☠` - toggle status to dead: lets you hear everyone during rounds.
+                                                        \n`am.kick <@user>` - removes player from game.''', inline = False)
 
     #Management commands
     embed.add_field(name='Management commands:', value ='''`am.promote <@user>` - promotes player to host. **Host only**
                                                          \n`am.kick <@user>` - removes player from game.
-                                                         \n`am.leave` - leave game.
+                                                         \n`am.update` - resends embed (interface with reactions).
                                                          \n`am.code <code>` - change the code displayed on the interface.''', inline = False)
 
     embed.add_field(name='Wiki commands:', value = '''`am.wiki` - link to the official Among Us Fandom Wiki.

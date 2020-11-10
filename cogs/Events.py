@@ -66,6 +66,7 @@ class Events(commands.Cog):
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
+        permissionString = 'Missing permissions.\nReinvite bot to regain bot permissions or check text channel permissions. Use `am.info` to get invite link.'
 
         #This prevents any commands with local handlers being handled here in on_command_error.
         if hasattr(ctx.command, 'on_error'):
@@ -86,6 +87,11 @@ class Events(commands.Cog):
         if isinstance(error, ignored):
             return
 
+        #BAD ARGUMENT
+        elif isinstance(error, commands.BadArgument):
+            await ctx.send("Invalid member! Use @user or member#ID")
+
+        #MISSING PERMISSIONS
         elif 'Missing Permissions' in str(error):
             try:
                 channel = ctx.author.dm_channel()
@@ -94,12 +100,14 @@ class Events(commands.Cog):
 
             guild = ctx.guild.name
 
-            await channel.send('Missing permissions in server: `' + guild + '`\nReinvite bot to regain bot permissions. Use `am.info` to get invite link.')
+            await channel.send(permissionString)
 
+        #UNKNOWN MESSAGE (USUALLY INTERFACE)
         elif 'Unknown Message' in str(error):
             manage = self.client.get_cog('ManagementCommands')
             await manage.update(ctx)
 
+        #MISSING REQUIRED ARGUMENTS
         elif isinstance(error, commands.MissingRequiredArgument):
             command = str(ctx.command)
             if command == 'start':
@@ -117,7 +125,7 @@ class Events(commands.Cog):
 
                         guild = ctx.guild.name
 
-                        await channel.send('Missing permissions in server: `' + guild + '`\nReinvite bot to regain bot permissions. Use `am.info` to get invite link.')
+                        await channel.send(permissionString)
 
             elif command == 'tip':
                 choice = random.randint(1, 2)
@@ -139,7 +147,7 @@ class Events(commands.Cog):
 
                         guild = ctx.guild.name
 
-                        await channel.send('Missing permissions in server: `' + guild + '`\nReinvite bot to regain bot permissions. Use `am.info` to get invite link.')
+                        await channel.send(permissionString)
 
             else:
                 try:
@@ -153,11 +161,14 @@ class Events(commands.Cog):
 
                         guild = ctx.guild.name
 
-                        await channel.send('Missing permissions in server: `' + guild + '`\nReinvite bot to regain bot permissions. Use `am.info` to get invite link.')
+                        await channel.send(permissionString)
 
+        #UNKNOWN ERRORS
         else:
             print(str(ctx.command) + ": " + str(error))
             return
+
+
 
 def setup(bot):
     bot.add_cog(Events(bot))

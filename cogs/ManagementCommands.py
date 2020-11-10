@@ -92,16 +92,6 @@ class ManagementCommands(commands.Cog):
 
         await ctx.send(str(player) + " was removed from the game.")
 
-    @kick.error
-    async def kick_error(self, ctx, error):
-        if isinstance(error, commands.BadArgument):
-            try:
-                await ctx.send("Invalid member. Type `am.kick <@user>` to remove a player.")
-            except:
-                return
-        else:
-            print(error)
-
     @commands.command()
     async def promote(self, ctx, member: discord.Member):
         try:
@@ -133,16 +123,6 @@ class ManagementCommands(commands.Cog):
         #Finally promote player
         game.setHost(newHost)
         await ctx.send(str(member) + " is the new host in `" + str(voiceChannel) + "`")
-
-    @promote.error
-    async def promote_error(self, ctx, error):
-        if isinstance(error, commands.BadArgument):
-            try:
-                await ctx.send("Invalid member. Type `am.promote <@user>` to promote a player.")
-            except:
-                return
-        else:
-            print(error)
 
     @commands.command()
     async def update(self, ctx):
