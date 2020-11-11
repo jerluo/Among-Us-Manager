@@ -19,10 +19,21 @@ class StartCommands(commands.Cog):
               join - join game
               joinall - join everyone in vc
               endgame - end the game
+              startall - start and joinall
     '''
 
     @commands.command()
-    async def start(self, ctx, code):
+    async def startall(self, ctx, code=None):
+        if code == None:
+            code = "`am.code <code>`"
+        await self.start(ctx, code)
+        await self.joinall(ctx)
+
+    @commands.command()
+    async def start(self, ctx, code=None):
+        if code == None:
+            code = "`am.code <code>`"
+
         try:
             voiceChannel = ctx.message.author.voice.channel
         except:

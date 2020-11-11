@@ -56,7 +56,7 @@ class GameCommands(commands.Cog):
 
         await self.changeDead(member, voiceChannel)
 
-    @commands.command(aliases=['round'])
+    @commands.command(aliases=['round', 'mute', 'm'])
     async def _round(self, ctx):
         try:
             voiceChannel = ctx.message.author.voice.channel
@@ -67,7 +67,7 @@ class GameCommands(commands.Cog):
 
         await self.changeStage(member, voiceChannel, Stage.Round)
 
-    @commands.command()
+    @commands.command(aliases=['unmute', 'u'])
     async def meeting(self, ctx):
         try:
             voiceChannel = ctx.message.author.voice.channel
@@ -78,7 +78,7 @@ class GameCommands(commands.Cog):
 
         await self.changeStage(member, voiceChannel, Stage.Meeting)
 
-    @commands.command()
+    @commands.command(aliases=['restart'])
     async def lobby(self, ctx):
         try:
             voiceChannel = ctx.message.author.voice.channel
