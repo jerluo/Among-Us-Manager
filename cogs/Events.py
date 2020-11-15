@@ -16,7 +16,9 @@ class Events(commands.Cog):
 
     """
         EVENTS: on_ready
+                on_guild_leave
                 on_reaction_add
+                on_command_error
     """
 
 
@@ -24,7 +26,6 @@ class Events(commands.Cog):
     async def on_ready(self):
         await self.client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="am.help"))
         print('Bot is ready.')
-
 
     @commands.Cog.listener()
     async def on_reaction_add(self, reaction, user):
@@ -112,6 +113,12 @@ class Events(commands.Cog):
         elif 'Unknown Message' in str(error):
             manage = self.client.get_cog('ManagementCommands')
             await manage.update(ctx)
+
+        #UNKNOWN CHANNEL
+        elif 'Unknown Channel' in str(error):
+            await ctx.send('Error: Game text channel deleted.')
+            cmd = self.client.get_cog('StartCommands')
+            await cmd.endgame(ctx)
 
         #MISSING REQUIRED ARGUMENTS
         elif isinstance(error, commands.MissingRequiredArgument):

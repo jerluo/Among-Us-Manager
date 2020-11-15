@@ -70,6 +70,9 @@ class Game:
     def setCode(self, code):
         self.code = code
 
+    def setText(self, channel):
+        self.textChannel = channel
+
     def getInterface(self):
         self.playerNumber = len(self.players)
         if self.stage == Stage.Lobby:
