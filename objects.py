@@ -121,10 +121,10 @@ class Game:
 
     def getAllPlayers(self):
         #Returns player type list
-        return self.players.values()
+        return list(self.players.values())
 
     def setAllAlive(self):
-        playerList = self.players.values()
+        playerList = list(self.players.values())
         for player in playerList:
             player.setAlive(True)
 
