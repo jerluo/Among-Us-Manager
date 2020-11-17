@@ -11,7 +11,7 @@ DATABASE_URL = os.environ.get('DATABASE_URL')
 
 #INTENTS
 intents = discord.Intents.default()
-intents.members = True
+#intents.members = True
 intents.typing = False
 
 #LOAD DATABASE
