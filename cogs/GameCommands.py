@@ -48,7 +48,7 @@ class GameCommands(commands.Cog):
             await msg.delete()
         except:
             pass
-        
+
         await manage.sendEmbed(game, textChannel)
 
     @commands.command()
@@ -154,8 +154,7 @@ class GameCommands(commands.Cog):
                 return
 
             except discord.errors.HTTPException:
-                mention = member.mention
-                await textChannel.send("Error! " + mention + " is not in the voice channel.\nType `am.kick @user` to remove a player.\n")
+                await textChannel.send("Error! " + member + " is not in the voice channel.\nType `am.kick @user` to remove a player.\n")
                 continue
             except Exception as e:
                 print(e)
