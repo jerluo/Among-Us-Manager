@@ -36,7 +36,7 @@ class DefaultCommands(commands.Cog):
             embed.add_field(name= '📝 Bot description', value="""This bot uses 'games' in voice channels and an 'interface' message with reactions to manage muting. The muting is done by deafening users.
                                                                 \n***Things to know:***
                                                                 \n**•** Every discord server can only handle 10 voice changes (muting or deafening) every ~5 seconds. If you missclick and surpass this limit there will be a 5 second delay (by Discord) until the next voice changes happen.
-                                                                \n**•** The bot has routine restart every 24 hours; if your game is deleted and commands stop working, simply create a new game.""", inline = False)
+                                                                \n**•** The bot has a routine restart every 24 hours; if your game is deleted and commands stop working, simply create a new game.""", inline = False)
             embed.add_field(name = '▶️ Start new game', value='''`am.start <code>` - host new game in current voice channel. *Code optional*
                                                                 \n`am.joinall` - joins everyone in the voice channel into the game.
                                                                 \n`am.startall <code>` - combines start and joinall into one command. *Code optional*''', inline = False)
