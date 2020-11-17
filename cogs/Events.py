@@ -16,7 +16,9 @@ class Events(commands.Cog):
 
     """
         EVENTS: on_ready
+                on_guild_leave
                 on_reaction_add
+                on_command_error
     """
 
 
@@ -24,7 +26,6 @@ class Events(commands.Cog):
     async def on_ready(self):
         await self.client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="am.help"))
         print('Bot is ready.')
-
 
     @commands.Cog.listener()
     async def on_reaction_add(self, reaction, user):
@@ -100,68 +101,41 @@ class Events(commands.Cog):
 
             guild = ctx.guild.name
 
-            await channel.send(permissionString)
+            try:
+                await channel.send(permissionString)
+            except discord.Forbidden:
+                try:
+                    await ctx.send(permissionString)
+                except:
+                    print('test')
 
         #UNKNOWN MESSAGE (USUALLY INTERFACE)
         elif 'Unknown Message' in str(error):
             manage = self.client.get_cog('ManagementCommands')
             await manage.update(ctx)
 
+        #UNKNOWN CHANNEL
+        elif 'Unknown Channel' in str(error):
+            await ctx.send('Error: Game text channel deleted.')
+            cmd = self.client.get_cog('StartCommands')
+            await cmd.endgame(ctx)
+
         #MISSING REQUIRED ARGUMENTS
         elif isinstance(error, commands.MissingRequiredArgument):
             command = str(ctx.command)
-            if command == 'start':
-                startCommand = self.client.get_cog('StartCommands')
-                msg = "type `am.code <code>`"
 
-                try:
-                    await startCommand.start(ctx, msg)
-                except Exception as e:
-                    if 'Missing Permissions' in str(e):
-                        try:
-                            channel = ctx.author.dm_channel()
-                        except:
-                            channel = await ctx.author.create_dm()
+            try:
+                await ctx.send('am.' + command + ' is missing an extra part. Check `am.help` for commands.')
+            except Exception as e:
+                if 'Missing Permissions' in str(e):
+                    try:
+                        channel = ctx.author.dm_channel()
+                    except:
+                        channel = await ctx.author.create_dm()
 
-                        guild = ctx.guild.name
+                    guild = ctx.guild.name
 
-                        await channel.send(permissionString)
-
-            elif command == 'tip':
-                choice = random.randint(1, 2)
-                info = self.client.get_cog('InformationCommands')
-
-                try:
-                    if choice == 1:
-                        await ctx.send('**Imposter Tip:**')
-                        await info.tip(ctx, "imposter")
-                    else:
-                        await ctx.send('**Crewmate Tip:**')
-                        await info.tip(ctx, "crewmate")
-                except Exception as e:
-                    if 'Missing Permissions' in str(e):
-                        try:
-                            channel = ctx.author.dm_channel()
-                        except:
-                            channel = await ctx.author.create_dm()
-
-                        guild = ctx.guild.name
-
-                        await channel.send(permissionString)
-
-            else:
-                try:
-                    await ctx.send('am.' + command + ' requires additional arguments')
-                except Exception as e:
-                    if 'Missing Permissions' in str(e):
-                        try:
-                            channel = ctx.author.dm_channel()
-                        except:
-                            channel = await ctx.author.create_dm()
-
-                        guild = ctx.guild.name
-
-                        await channel.send(permissionString)
+                    await channel.send(permissionString)
 
         #UNKNOWN ERRORS
         else:

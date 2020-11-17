@@ -24,7 +24,7 @@ class GameCommands(commands.Cog):
     '''
 
     @commands.command()
-    async def code(self, ctx, code):
+    async def code(self, ctx, code: str):
         try:
             voiceChannel = ctx.message.author.voice.channel
         except:
@@ -38,10 +38,17 @@ class GameCommands(commands.Cog):
             await ctx.send("Create a game with `am.start`")
             return
 
-
         game.setCode(code)
         manage = self.client.get_cog('ManagementCommands')
         textChannel = game.getText()
+
+        try:
+            #Delete prior message
+            msg = game.getMsg()
+            await msg.delete()
+        except:
+            pass
+
         await manage.sendEmbed(game, textChannel)
 
     @commands.command()
@@ -56,7 +63,7 @@ class GameCommands(commands.Cog):
 
         await self.changeDead(member, voiceChannel)
 
-    @commands.command(aliases=['round'])
+    @commands.command(aliases=['round', 'mute', 'm'])
     async def _round(self, ctx):
         try:
             voiceChannel = ctx.message.author.voice.channel
@@ -67,7 +74,7 @@ class GameCommands(commands.Cog):
 
         await self.changeStage(member, voiceChannel, Stage.Round)
 
-    @commands.command()
+    @commands.command(aliases=['unmute', 'u'])
     async def meeting(self, ctx):
         try:
             voiceChannel = ctx.message.author.voice.channel
@@ -78,7 +85,7 @@ class GameCommands(commands.Cog):
 
         await self.changeStage(member, voiceChannel, Stage.Meeting)
 
-    @commands.command()
+    @commands.command(aliases=['restart'])
     async def lobby(self, ctx):
         try:
             voiceChannel = ctx.message.author.voice.channel
@@ -147,8 +154,7 @@ class GameCommands(commands.Cog):
                 return
 
             except discord.errors.HTTPException:
-                mention = member.mention
-                await textChannel.send("Error! " + mention + " is not in the voice channel.\nType `am.kick @user` to remove a player.\n")
+                await textChannel.send("Error! " + member + " is not in the voice channel.\nType `am.kick @user` to remove a player.\n")
                 continue
             except Exception as e:
                 print(e)
@@ -183,10 +189,13 @@ class GameCommands(commands.Cog):
             muteBool = False
             deafenBool = True
 
-        if stage == Stage.Meeting:
-            await member.edit(mute = muteBool)
-        if stage == Stage.Round:
-            await member.edit(deafen = deafenBool)
+        try:
+            if stage == Stage.Meeting:
+                await member.edit(mute = muteBool)
+            if stage == Stage.Round:
+                await member.edit(deafen = deafenBool)
+        except:
+            pass
 
 
 def setup(bot):

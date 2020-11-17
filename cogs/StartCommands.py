@@ -19,10 +19,21 @@ class StartCommands(commands.Cog):
               join - join game
               joinall - join everyone in vc
               endgame - end the game
+              startall - start and joinall
     '''
 
     @commands.command()
-    async def start(self, ctx, code):
+    async def startall(self, ctx, code=None):
+        if code == None:
+            code = "`am.code <code>`"
+        await self.start(ctx, code)
+        await self.joinall(ctx)
+
+    @commands.command()
+    async def start(self, ctx, code=None):
+        if code == None:
+            code = "`am.code <code>`"
+
         try:
             voiceChannel = ctx.message.author.voice.channel
         except:
@@ -52,6 +63,7 @@ class StartCommands(commands.Cog):
     async def endgame(self, ctx):
         try:
             voiceChannel = ctx.message.author.voice.channel
+            vcString = str(voiceChannel)
         except:
             return
 
@@ -77,13 +89,16 @@ class StartCommands(commands.Cog):
                 await ctx.send("Only players in the game can end the game during the first 6 hours of creation.\nYou can create a new game in a new voice channel.")
                 return
 
-        voiceChannel = game.getVoice()
+        #Delete game
         del games[voiceChannel]
 
-        msg = game.getMsg()
-        await msg.delete()
+        try:
+            msg = game.getMsg()
+            await msg.delete()
+        except:
+            pass
 
-        await ctx.send("Game in `" + str(voiceChannel) + "` ended.")
+        await ctx.send("Game in `" + vcString + "` ended.")
 
     @commands.command()
     async def join(self, ctx):

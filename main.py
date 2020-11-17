@@ -1,65 +1,83 @@
 import asyncio
+import psycopg2
 import discord
 import random
 import os
 from objects import *
 from discord.ext import commands
 
-client = commands.Bot(command_prefix = 'am.')
+KEY = os.environ.get('KEY')
+DATABASE_URL = os.environ.get('DATABASE_URL')
+
+#INTENTS
+intents = discord.Intents.default()
+#intents.members = True
+intents.typing = False
+
+#LOAD DATABASE
+try:
+    conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+    c = conn.cursor()
+except:
+    print("Failed to connect to database")
+
+def get_prefix(client, message):
+    try:
+        guildID = message.guild.id
+        sql_query = '''SELECT * FROM prefixes WHERE id = (%s)'''
+        c.execute(sql_query, (guildID,))
+        prefix = c.fetchone()
+
+        if prefix is None:
+            return 'am.'
+        else:
+            return prefix[1]
+    except:
+        return 'am.'
+
+client = commands.AutoShardedBot(command_prefix = get_prefix, intents=intents, chunk_guilds_at_startup=False)
 client.remove_command('help')
 
-KEY = os.environ.get('KEY')
-
+#LOAD COGS
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
         client.load_extension(f'cogs.{filename[:-3]}')
 
+#PREFIX COMMANDS
 @client.command()
-async def ping(ctx):
-    await ctx.send(f'Pong! {round(client.latency * 1000)}ms')
+async def prefix(ctx, prefix):
 
-@client.command()
-async def help(ctx):
-    embed = discord.Embed(
-        colour = discord.Colour.orange(),
-        description = "***IMPORTANT***: If you're using this bot and commands stop working, the game may have ended during a routine bot restart that happens every 24 hours. Simply start a new game to resume."
-    )
+    userPrefix = str(prefix)
 
-    embed.set_author(name = '[Among Us Manager] Commands:')
+    try:
+        guildID = ctx.message.guild.id
+    except AttributeError:
+        await ctx.send("Changing prefix is only possible in servers!")
+        return
 
-    #Starting commands
-    embed.add_field(name='Getting started:',value='''`am.start <code>` - host new game in current voice channel. Only one game is allowed in each voice channel. *Code optional*
-                                                  \n`am.join` - joins existing game in the voice channel.
-                                                  \n`am.joinall` - joins everyone in the voice channel into the game. *Kicks everyone in the game but not in the voice channel*
-                                                  \n`am.endgame` - ends the game in the voice channel. ''', inline = False)
+    sql_query = '''SELECT FROM prefixes WHERE id = (%s)'''
+    c.execute(sql_query, (guildID,))
+    prefix = c.fetchone()
 
-    #Host game commands
-    embed.add_field(name='Host game commands: if these commands are spammed the bot will slow down',value='''\n`am.round   or 🔇` - mute everyone alive (tasks).
-                                                        \n`am.meeting or 📢` - umutes everyone alive (meeting).
-                                                        \n`am.lobby   or ⏮` - restart game (lobby). Sets everyone alive and unmutes all.
-                                                        \n`am.dead <@user>` - set someone to dead. Players can do this themselves without the <@user> ''', inline = False)
+    #Check if prefix exists
+    if prefix is not None:
+        #Delete prior prefix
+        sql_execute = '''DELETE FROM prefixes WHERE id = (%s)'''
+        c.execute(sql_execute, (guildID,))
 
-    #Player game commands
-    embed.add_field(name='Player game commands:',value='''`am.dead or ☠` - toggle status to dead: lets you hear everyone during rounds.
-                                                        \n`am.kick <@user>` - removes player from game.''', inline = False)
+    #Add prefix to list
+    sql_execute = '''INSERT INTO prefixes (id, prefix) VALUES (%s, %s)'''
+    c.execute(sql_execute, (guildID, userPrefix))
+    await ctx.send("Successfully changed prefix to " + userPrefix)
 
-    #Management commands
-    embed.add_field(name='Management commands:', value ='''`am.promote <@user>` - promotes player to host. **Host only**
-                                                         \n`am.kick <@user>` - removes player from game.
-                                                         \n`am.update` - resends embed (interface with reactions).
-                                                         \n`am.code <code>` - change the code displayed on the interface.''', inline = False)
+    conn.commit()
 
-    embed.add_field(name='Wiki commands:', value = '''`am.wiki` - link to the official Among Us Fandom Wiki.
-                                                    \n`am.map <map>` - image of map with vents, common tasks, and more.
-                                                    \n`am.tip <imposter OR crewmate>` - returns random tip for either the imposter or crewmate.''', inline = False)
+@client.event
+async def on_guild_remove(guild):
+    guildID = guild.id
+    sql_execute = '''DELETE FROM prefixes WHERE id = (%s)'''
+    c.execute(sql_execute, (guildID,))
 
-    embed.add_field(name="Information:", value = '''`am.info` - github link and invite link.
-                                                  \n`am.vote` - vote to support the bot!''')
-
-    embed.set_footer(text='Created by Jerry#5922')
-
-    await ctx.send(embed=embed)
-
-
+    conn.commit()
 
 client.run(KEY)

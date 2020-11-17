@@ -44,7 +44,7 @@ class InformationCommands(commands.Cog):
 
         mapString = map.lower()
 
-        embed = discord.Embed(colour = discord.Colour.blue())
+        embed = discord.Embed(colour = discord.Colour.orange())
 
         if(mapString == 'mira' or mapString == 'mirahq'):
             embed.set_image(url = r'https://i.imgur.com/iUf6FDq.png')
@@ -60,18 +60,30 @@ class InformationCommands(commands.Cog):
         await ctx.send(embed=embed)
 
     @commands.command(aliases=['tips'])
-    async def tip(self, ctx, group):
+    async def tip(self, ctx, group=None):
+        #Tip without specifying
+        if group == None:
+            choice = random.randint(1, 2)
 
-        groupString = group.lower()
+            if choice == 1:
+                await ctx.send('**Imposter Tip:**')
+                await self.tip(ctx, "imposter")
+            else:
+                await ctx.send('**Crewmate Tip:**')
+                await self.tip(ctx, "crewmate")
 
-        if(groupString == 'imposter'):
-            tip = random.choice(self.imposterTips)
-        elif(groupString == 'crewmate' or groupString == 'crew'):
-            tip = random.choice(self.crewmateTips)
+        #When specified
         else:
-            tip = '`' + group + '` is not valid. Use `am.tip imposter` or `am.tip crewmate`'
+            groupString = group.lower()
 
-        await ctx.send(tip)
+            if(groupString == 'imposter'):
+                tip = random.choice(self.imposterTips)
+            elif(groupString == 'crewmate' or groupString == 'crew'):
+                tip = random.choice(self.crewmateTips)
+            else:
+                tip = '`' + group + '` is not valid. Use `am.tip imposter` or `am.tip crewmate`'
+
+            await ctx.send(tip)
 
 
 def setup(bot):

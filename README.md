@@ -1,4 +1,7 @@
 <div align="center">
+
+![status](https://top.gg/api/widget/status/756743033181044827.svg) ![owner](https://top.gg/api/widget/owner/756743033181044827.svg) ![lib](https://top.gg/api/widget/lib/756743033181044827.svg) ![servers](https://top.gg/api/widget/servers/756743033181044827.svg) ![upvotes](https://top.gg/api/widget/upvotes/756743033181044827.svg)
+
 <h1>Among Us Manager</h1>  
 
 [![Bot Image](https://i.imgur.com/K6V81tr.png)](https://discord.com/api/oauth2/authorize?client_id=756743033181044827&permissions=12787776&scope=bot)
