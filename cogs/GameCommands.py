@@ -24,7 +24,7 @@ class GameCommands(commands.Cog):
     '''
 
     @commands.command()
-    async def code(self, ctx, code):
+    async def code(self, ctx, code: str):
         try:
             voiceChannel = ctx.message.author.voice.channel
         except:
@@ -38,10 +38,17 @@ class GameCommands(commands.Cog):
             await ctx.send("Create a game with `am.start`")
             return
 
-
-        game.setCode(str(code))
+        game.setCode(code)
         manage = self.client.get_cog('ManagementCommands')
         textChannel = game.getText()
+
+        try:
+            #Delete prior message
+            msg = game.getMsg()
+            await msg.delete()
+        except:
+            pass
+        
         await manage.sendEmbed(game, textChannel)
 
     @commands.command()

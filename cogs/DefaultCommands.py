@@ -25,8 +25,13 @@ class DefaultCommands(commands.Cog):
 
         embed.set_footer(text = 'Created by Jerry#5922',)
 
+        try:
+            pgNum = int(page)
+        except:
+            pgNum = -1;
+
         #Quick start (1)
-        if page is None or int(page) == 1:
+        if page is None or pgNum == 1:
             embed.set_author(name = 'Among Us Manager - Quick Start: | Page 1 / 3')
             embed.add_field(name= '📝 Bot description', value="""This bot uses 'games' in voice channels and an 'interface' message with reactions to manage muting. The muting is done by deafening users.
                                                                 \n***Things to know:***
@@ -41,7 +46,7 @@ class DefaultCommands(commands.Cog):
             embed.add_field(name='🧑 Player commands',value='''`am.dead or ☠` - toggle status to dead: lets you hear everyone during rounds.''', inline = False)
 
         #Additional (2)
-        elif int(page) == 2:
+        elif pgNum == 2:
             embed.set_author(name = 'Among Us Manager - Additional Commands: | Page 2 / 3')
             embed.add_field(name="🛑 Ending commands:", value = '''`am.endgame` - ends the game in the voice channel.
                                                                  \n`am.leave` - leave game.''', inline = False)
@@ -55,7 +60,7 @@ class DefaultCommands(commands.Cog):
                                                             \n`am.tip <imposter OR crewmate>` - returns random tip.''', inline = False)
 
         #All commands (3)
-        elif int(page) == 3:
+        elif pgNum == 3:
             embed.set_author(name = 'Among Us Manager - Full List: | Page 3 / 3')
 
             #Starting commands
@@ -88,7 +93,7 @@ class DefaultCommands(commands.Cog):
                                                           \n`am.info` - github link and invite link.
                                                           \n`am.vote` - vote to support the bot!''')
         else:
-            await ctx.send(page + " is not a valid page. `am.help` for main page, `1` for starting, `2` for all commands.")
+            await ctx.send(page + " is not a valid page. `am.help` for main page, `am.help 2` for additional commands, `am.help 3` for all commands.")
             return
 
         await ctx.send(embed=embed)
