@@ -10,7 +10,7 @@ class DefaultCommands(commands.Cog):
     Commands: help - help
               ping - pong
     '''
-    
+
     @commands.command()
     async def ping(self, ctx):
         await ctx.send(f'Pong! {round(self.client.latency * 1000)}ms')
@@ -84,7 +84,8 @@ class DefaultCommands(commands.Cog):
                                                             \n`am.map <map>` - image of map with vents, common tasks, and more.
                                                             \n`am.tip <imposter OR crewmate>` - returns random tip for either the imposter or crewmate.''', inline = False)
 
-            embed.add_field(name="Information:", value = '''`am.info` - github link and invite link.
+            embed.add_field(name="Information:", value = '''`am.prefix <prefix>` - change the prefix used to call the bot.
+                                                          \n`am.info` - github link and invite link.
                                                           \n`am.vote` - vote to support the bot!''')
         else:
             await ctx.send(page + " is not a valid page. `am.help` for main page, `1` for starting, `2` for all commands.")

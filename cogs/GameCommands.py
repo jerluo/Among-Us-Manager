@@ -39,7 +39,7 @@ class GameCommands(commands.Cog):
             return
 
 
-        game.setCode(code)
+        game.setCode(str(code))
         manage = self.client.get_cog('ManagementCommands')
         textChannel = game.getText()
         await manage.sendEmbed(game, textChannel)
@@ -183,10 +183,13 @@ class GameCommands(commands.Cog):
             muteBool = False
             deafenBool = True
 
-        if stage == Stage.Meeting:
-            await member.edit(mute = muteBool)
-        if stage == Stage.Round:
-            await member.edit(deafen = deafenBool)
+        try:
+            if stage == Stage.Meeting:
+                await member.edit(mute = muteBool)
+            if stage == Stage.Round:
+                await member.edit(deafen = deafenBool)
+        except:
+            pass
 
 
 def setup(bot):
