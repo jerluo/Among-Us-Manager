@@ -154,7 +154,7 @@ class GameCommands(commands.Cog):
                 return
 
             except discord.errors.HTTPException:
-                await textChannel.send("Error! " + member + " is not in the voice channel.\nType `am.kick @user` to remove a player.\n")
+                await textChannel.send("Error! " + str(member) + " is not in the voice channel.\nType `am.kick @user` to remove a player.\n")
                 continue
             except Exception as e:
                 print(e)
