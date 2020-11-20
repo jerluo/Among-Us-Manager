@@ -12,6 +12,7 @@ class TopGG(commands.Cog):
         KEY = os.environ.get('API')
         self.token = KEY
         self.dblpy = dbl.DBLClient(self.bot, self.token)
+        self.update_stats.start()
 
     @tasks.loop(minutes=30.0)
     async def update_stats(self):
