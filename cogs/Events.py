@@ -93,7 +93,7 @@ class Events(commands.Cog):
             await ctx.send("Invalid member! Use @user or member#ID")
 
         #MISSING PERMISSIONS
-        elif 'Missing Permissions' in str(error):
+        elif isinstance(error, discord.errors.Forbidden):
             try:
                 channel = ctx.author.dm_channel()
             except:
