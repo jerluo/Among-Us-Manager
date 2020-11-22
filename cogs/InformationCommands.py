@@ -63,7 +63,7 @@ class InformationCommands(commands.Cog):
     async def controls(self, ctx):
 
         controlEmbed = discord.Embed(colour = discord.Colour.orange())
-        controlEmbed.set_image(url = r'https://i.imgur.com/qwDoFGu.jpg')
+        controlEmbed.set_image(url = r'https://i.imgur.com/vomXNhM.png')
 
         await ctx.send(embed=controlEmbed)
 
