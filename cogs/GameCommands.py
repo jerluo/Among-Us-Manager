@@ -150,11 +150,23 @@ class GameCommands(commands.Cog):
                 elif status == False:
                     await member.edit(mute = deadBool)
             except discord.errors.Forbidden:
-                await textChannel.send("Missing Permissions! Reinvite the bot or give back roles.")
+                permEmbed = discord.Embed(
+                    colour = discord.Colour.orange(),
+                    description = 'Reinvite bot to regain bot permissions or check text channel permissions.\nUse `am.info` to get invite link.'
+                )
+                embed.set_author(name = 'Missing permissions!')
+
+                await textChannel.send(embed=permEmbed)
                 return
 
             except discord.errors.HTTPException:
-                await textChannel.send("Error! " + str(member) + " is not in the voice channel.\nType `am.kick @user` to remove a player.\n")
+                embed = discord.Embed(
+                    colour = discord.Colour.orange(),
+                    description = str(member) + ' is not connected to the voice channel!\nType `am.kick @user` to remove a player.'
+                )
+                embed.set_author(name = 'Oops!')
+
+                await textChannel.send(embed=embed)
                 continue
             except Exception as e:
                 print(e)
@@ -166,8 +178,11 @@ class GameCommands(commands.Cog):
         #Set stage
         game.setStage(stage)
 
-        #Send embed
-        await manage.sendEmbed(game, textChannel)
+        try:
+            #Send embed
+            await manage.sendEmbed(game, textChannel)
+        except discord.errors.Forbidden:
+            return
 
     async def changeDead(self, member, voiceChannel):
         #Get game and player

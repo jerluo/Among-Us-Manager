@@ -59,6 +59,14 @@ class InformationCommands(commands.Cog):
 
         await ctx.send(embed=embed)
 
+    @commands.command(aliases = ['control'])
+    async def controls(self, ctx):
+
+        controlEmbed = discord.Embed(colour = discord.Colour.orange())
+        controlEmbed.set_image(url = r'https://i.imgur.com/qwDoFGu.jpg')
+
+        await ctx.send(embed=controlEmbed)
+
     @commands.command(aliases=['tips'])
     async def tip(self, ctx, group=None):
         #Tip without specifying

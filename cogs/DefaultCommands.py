@@ -57,6 +57,7 @@ class DefaultCommands(commands.Cog):
 
             embed.add_field(name='📚 Wiki commands:', value = '''`am.wiki` - link to the Wiki.
                                                             \n`am.map <map>` - detailed map.
+                                                            \n`am.controls` - default Among Us keybinds.
                                                             \n`am.tip <imposter OR crewmate>` - returns random tip.''', inline = False)
 
         #All commands (3)
@@ -67,6 +68,7 @@ class DefaultCommands(commands.Cog):
             embed.add_field(name='Getting started:',value='''`am.start <code>` - host new game in current voice channel. Only one game is allowed in each voice channel. *Code optional*
                                                           \n`am.join` - joins existing game in the voice channel.
                                                           \n`am.joinall` - joins everyone in the voice channel into the game. *Kicks everyone in the game but not in the voice channel*
+                                                          \n`am.startall <code>` - combines start and joinall into one command. *Code optional*
                                                           \n`am.endgame` - ends the game in the voice channel. ''', inline = False)
 
             #Host game commands
@@ -87,6 +89,7 @@ class DefaultCommands(commands.Cog):
 
             embed.add_field(name='Wiki commands:', value = '''`am.wiki` - link to the official Among Us Fandom Wiki.
                                                             \n`am.map <map>` - image of map with vents, common tasks, and more.
+                                                            \n`am.controls` - default Among Us keybinds.
                                                             \n`am.tip <imposter OR crewmate>` - returns random tip for either the imposter or crewmate.''', inline = False)
 
             embed.add_field(name="Information:", value = '''`am.prefix <prefix>` - change the prefix used to call the bot.

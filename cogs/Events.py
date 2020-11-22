@@ -67,7 +67,12 @@ class Events(commands.Cog):
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
-        permissionString = 'Missing permissions.\nReinvite bot to regain bot permissions or check text channel permissions. Use `am.info` to get invite link.'
+        permEmbed = discord.Embed(
+            colour = discord.Colour.orange(),
+            description = 'Reinvite bot to regain bot permissions or check text channel permissions.\nUse `am.info` to get invite link.'
+        )
+        permEmbed.set_author(name = 'Missing permissions!')
+
 
         #This prevents any commands with local handlers being handled here in on_command_error.
         if hasattr(ctx.command, 'on_error'):
@@ -102,10 +107,10 @@ class Events(commands.Cog):
             guild = ctx.guild.name
 
             try:
-                await channel.send(permissionString)
+                await channel.send(embed=permEmbed)
             except discord.Forbidden:
                 try:
-                    await ctx.send(permissionString)
+                    await ctx.send(embed=permEmbed)
                 except:
                     print('test')
 
@@ -135,7 +140,7 @@ class Events(commands.Cog):
 
                     guild = ctx.guild.name
 
-                    await channel.send(permissionString)
+                    await channel.send(embed=permEmbed)
 
         #UNKNOWN ERRORS
         else:

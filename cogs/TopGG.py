@@ -19,7 +19,6 @@ class TopGG(commands.Cog):
         """This function runs every 30 minutes to automatically update your server count"""
         try:
             await self.dblpy.post_guild_count(guild_count=len(self.bot.guilds), shard_count=len(self.bot.shards))
-            print('Posted server count ({})'.format(self.dblpy.guild_count()))
         except Exception as e:
             print('Failed to post server count\n{}: {}'.format(type(e).__name__, e))
 
