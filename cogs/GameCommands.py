@@ -154,7 +154,7 @@ class GameCommands(commands.Cog):
                     colour = discord.Colour.orange(),
                     description = 'Reinvite bot to regain bot permissions or check text channel permissions.\nUse `am.info` to get invite link.'
                 )
-                embed.set_author(name = 'Missing permissions!')
+                permEmbed.set_author(name = 'Missing permissions!')
 
                 await textChannel.send(embed=permEmbed)
                 return
