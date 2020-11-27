@@ -21,7 +21,120 @@ class ManagementCommands(commands.Cog):
                   leave - leave game
                   promote - promote player to host
                   update - update interface
+                  settings - display/change game settings
+                  channel - dead channel
     '''
+
+    @commands.command(aliases = ['setting'])
+    async def settings(self, ctx, setting: str=None):
+        #Get game and make sure it's the host
+        try:
+            voiceChannel = ctx.message.author.voice.channel
+        except:
+            return
+
+        host = ctx.message.author
+
+        game, player = gameRequirements(host, voiceChannel)
+
+        #Game exist?
+        if game is False:
+            await ctx.send("Game doesn't exist in `" + voiceChannel.name + "`")
+            return
+
+        if setting == None:
+            await ctx.send(embed=game.getSettings())
+
+        else:
+            #Player is host?
+            if player is not game.getHost():
+                await ctx.send("Only host can change settings.")
+                return
+
+            settings = setting.lower()
+
+            if settings == "mute" or settings == "deafen" or settings == "move":
+                game.setMute(settings)
+
+            elif settings == "show" or settings == "hide":
+                game.setInterface(settings)
+
+            elif settings == "reactions" or settings == "host":
+                game.setControls(settings)
+
+                if settings == "host":
+                    game.setMute("mute")
+
+            else:
+                await ctx.send("`" + settings + "` is not a valid setting.")
+                return
+
+            await ctx.send(embed=game.getSettings())
+            await self.update(ctx)
+
+    @commands.command()
+    async def channel(self, ctx, *, vc=None):
+
+        #Get game and make sure it's the host
+        try:
+            voice = ctx.message.author.voice.channel
+        except:
+            return
+
+        host = ctx.message.author
+
+        game, player = gameRequirements(host, voice)
+
+        if game is False or player is False:
+            return
+
+        #Create new channel
+        if vc is None:
+            guild = ctx.message.guild
+            category = ctx.message.author.voice.channel.category
+            try:
+                voiceChannel = await guild.create_voice_channel("Dead Channel",category=category)
+            except discord.errors.Forbidden:
+                permEmbed = discord.Embed(
+                    colour = discord.Colour.orange(),
+                    description = 'Reinvite bot to regain bot permissions or check text channel permissions.\nUse `am.info` to get invite link.'
+                )
+                permEmbed.set_author(name = 'Missing permissions!')
+                await ctx.send(permEmbed)
+                return
+            except discord.errors.HTTPException:
+                await ctx.send("Error creating voice channel.")
+                return
+
+            deleteVC(game.deadVC)
+            secondVC(game, voiceChannel)
+            game.setDeadVC(voiceChannel)
+
+        #Inputted channel
+        else:
+            voiceChannel = None
+            for channel in ctx.guild.voice_channels:
+                if channel.name == vc:
+                    voiceChannel = channel
+
+            if voiceChannel is None:
+                await ctx.send("Voice channel not found (make sure capitalization is correct).")
+                return
+
+            if player is not game.getHost():
+                await ctx.send("Only host can change settings.")
+                return
+
+            if voiceChannel == game.getVoice():
+                await ctx.send("Dead voice channel must be different channel than the main voice channel.")
+                return
+            else:
+                deleteVC(game.deadVC)
+                secondVC(game, voiceChannel)
+                game.setDeadVC(voiceChannel)
+
+        await self.update(ctx)
+
 
     @commands.command()
     async def leave(self, ctx):
@@ -135,6 +248,13 @@ class ManagementCommands(commands.Cog):
         game, player = gameRequirements(member, voiceChannel)
         if(game is False or player is False):
             return
+
+        try:
+            msg = game.getMsg()
+            msg.type
+            await msg.delete()
+        except:
+            pass
 
         textChannel = game.getText()
         await self.sendEmbed(game, textChannel)

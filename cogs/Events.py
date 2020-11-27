@@ -8,6 +8,7 @@ parentdir = os.path.dirname(currentdir)
 sys.path.append(parentdir)
 
 from objects import *
+from GameManager import *
 
 class Events(commands.Cog):
 
@@ -47,23 +48,53 @@ class Events(commands.Cog):
 
         member = user
 
+        #Get game and player
+        game, player = gameRequirements(member, voiceChannel)
+        if game is False or player is False:
+            return
+
         gamecommand = self.client.get_cog('GameCommands')
 
         #Dead reaction
         if reaction == '☠':
-            await gamecommand.changeDead(member, voiceChannel)
+            await gamecommand.changeDead(game, player)
 
         #Meeting reaction
         elif reaction == '📢':
-            await gamecommand.changeStage(member, voiceChannel, Stage.Meeting)
+            await gamecommand.changeStage(game, player, Stage.Meeting)
 
         #Mute reaction
         elif reaction == '🔇':
-            await gamecommand.changeStage(member, voiceChannel, Stage.Round)
+            await gamecommand.changeStage(game, player, Stage.Round)
 
         #Meeting reaction
         elif reaction == '⏮':
-            await gamecommand.changeStage(member, voiceChannel, Stage.Lobby)
+            await gamecommand.changeStage(game, player, Stage.Lobby)
+
+    @commands.Cog.listener()
+    async def on_voice_state_update(self, member, before, after):
+        #Variables needed
+        try:
+            voiceChannel = member.voice.channel
+        except:
+            return
+
+        #Get game and player
+        game, player = gameRequirements(member, voiceChannel)
+        if game is False or player is False or game.controlSetting is not Controls.Host or player is not game.getHost():
+            return
+
+        gamecommand = self.client.get_cog('GameCommands')
+
+        #If host mutes
+        if not before.self_mute and after.self_mute:
+            #Mute game
+            await gamecommand.changeStage(game, player, Stage.Round)
+
+        #If host unmutes
+        if before.self_mute and not after.self_mute:
+            #Unmute game
+            await gamecommand.changeStage(game, player, Stage.Meeting)
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):

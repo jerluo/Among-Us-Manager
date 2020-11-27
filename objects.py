@@ -7,6 +7,19 @@ class Stage(enum.Enum):
     Round = 2
     Meeting = 3
 
+class Muting(enum.Enum):
+    Deafen = 1
+    Mute = 2
+    Move = 3
+
+class Interface(enum.Enum):
+    Show = 1
+    Hide = 2
+
+class Controls(enum.Enum):
+    Reactions = 1
+    Host = 2
+
 class Player:
 
     def __init__(self, member):
@@ -30,15 +43,23 @@ class Player:
 class Game:
 
     def __init__(self, voiceChannel, textChannel, host, code):
-        self.voiceChannel = voiceChannel
-        self.textChannel = textChannel
-        self.host = Player(host)
-        self.stage = Stage.Lobby
-        self.players = {str(self.host) : self.host}
-        self.playerNumber = len(self.players)
-        self.msg = None
-        self.timestamp = datetime.datetime.now()
-        self.code = code
+
+        self.voiceChannel = voiceChannel #main voice channel (identifier)
+        self.deadVC = None #dead voice channel (moving)
+        self.textChannel = textChannel #text channel to send things to
+        self.host = Player(host) #player host
+        self.stage = Stage.Lobby #stage
+        self.players = {str(self.host) : self.host} #player list with players
+        self.playerNumber = len(self.players) #number of player
+        self.msg = None #last interface sent
+        self.timestamp = datetime.datetime.now() #game creation time
+        self.code = code #game code in interface
+        self.cooldown = False #cooldown on actions
+
+        #Settings
+        self.muteSetting = Muting.Deafen
+        self.interfaceSetting = Interface.Show
+        self.controlSetting = Controls.Reactions
 
     def getTime(self):
         return self.timestamp
@@ -73,6 +94,36 @@ class Game:
     def setText(self, channel):
         self.textChannel = channel
 
+    def setDeadVC(self, channel):
+        self.deadVC = channel
+
+    def setCooldown(self, bool):
+        self.cooldown = bool
+
+    def setMute(self, muting):
+        if muting == "deafen":
+            self.muteSetting = Muting.Deafen
+
+        if muting == "mute":
+            self.muteSetting = Muting.Mute
+
+        if muting == "move":
+            self.muteSetting = Muting.Move
+
+    def setInterface(self, setting):
+        if setting == "show":
+            self.interfaceSetting = Interface.Show
+
+        if setting == "hide":
+            self.interfaceSetting = Interface.Hide
+
+    def setControls(self, setting):
+        if setting == "reactions":
+            self.controlSetting = Controls.Reactions
+
+        if setting == "host":
+            self.controlSetting = Controls.Host
+
     def getInterface(self):
         self.playerNumber = len(self.players)
         if self.stage == Stage.Lobby:
@@ -86,6 +137,7 @@ class Game:
             colour = discord.Colour.orange(),
             title = "Game Code: " + self.code,
             description = "🔊 **Voice Channel:** " + self.voiceChannel.name +
+                   "\n" + "☠ **Dead VC:** " + str(self.deadVC) +
                    "\n" + "👥 **Player Count:** " + str(self.playerNumber) +
                    "\n" + emoji + " **Game stage:** " + self.stage.name,
             timestamp = self.timestamp
@@ -93,13 +145,34 @@ class Game:
 
         embed.set_footer(text='Host: ' + str(self.host))
 
-        #Get all players and their states
+        if self.interfaceSetting == Interface.Show:
+            #Get all players and their states
+            for player in self.players.values():
+                if player.isAlive() == True:
+                    embed.add_field(name = player, value='`❤ Alive`', inline = False)
+                elif player.isAlive() == False:
+                    embed.add_field(name = player, value='`☠ Dead`', inline = False)
+        else:
+            playerList = list(self.players.values())
+            players = "`" + str(playerList[0])
+            for player in playerList[1:]:
+                players = players + ", " + str(player)
+            players += "`"
 
-        for player in self.players.values():
-            if player.isAlive() == True:
-                embed.add_field(name = player, value='`❤ Alive`', inline = False)
-            elif player.isAlive() == False:
-                embed.add_field(name = player, value='`☠ Dead`', inline = False)
+            embed.add_field(name = "Player List", value=players)
+
+        return embed
+
+    def getSettings(self):
+        embed = discord.Embed(
+            colour = discord.Colour.orange(),
+
+            title = "⚙️ Settings: " + self.voiceChannel.name + " ⚙️",
+
+            description = "🔇 **Muting:** " + self.muteSetting.name +
+                   "\n" + "🖥️ **Interface:** " + self.interfaceSetting.name +
+                   "\n" + "🎮 **Controls:** " + self.controlSetting.name
+        )
 
         return embed
 

@@ -27,3 +27,12 @@ def addGame(game):
 def endGame(game):
     voiceChannel = game.getVoice()
     del games[voiceChannel]
+
+def secondVC(game, voiceChannel):
+    games[voiceChannel] = game
+
+def deleteVC(voiceChannel):
+    try:
+        del games[voiceChannel]
+    except:
+        return

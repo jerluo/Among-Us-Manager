@@ -20,7 +20,7 @@ class DefaultCommands(commands.Cog):
 
         embed = discord.Embed(
             colour = discord.Colour.orange(),
-            description = '**| Page 1: Quick Start | Page 2: Additional Commands | Page 3: Full List |**'
+            description = '**| Pg 1: Quick Start | Pg 2: Game Settings | Pg 3: Other Commands | Pg 4: Full List |**'
         )
 
         embed.set_footer(text = 'Created by Jerry#5922',)
@@ -32,7 +32,7 @@ class DefaultCommands(commands.Cog):
 
         #Quick start (1)
         if page is None or pgNum == 1:
-            embed.set_author(name = 'Among Us Manager - Quick Start: | Page 1 / 3')
+            embed.set_author(name = 'Among Us Manager - Quick Start: | Page 1 / 4')
             embed.add_field(name= '📝 Bot description', value="""This bot uses 'games' in voice channels and an 'interface' message with reactions to manage muting. The muting is done by deafening users.
                                                                 \n***Things to know:***
                                                                 \n**•** Every discord server can only handle 10 voice changes (muting or deafening) every ~5 seconds. If you missclick and surpass this limit there will be a 5 second delay (by Discord) until the next voice changes happen.
@@ -45,9 +45,22 @@ class DefaultCommands(commands.Cog):
                                                                 \n`am.lobby   or ⏮` - restart game (lobby). Sets everyone alive and unmutes all.''', inline = False)
             embed.add_field(name='🧑 Player commands',value='''`am.dead or ☠` - toggle status to dead: lets you hear everyone during rounds.''', inline = False)
 
-        #Additional (2)
         elif pgNum == 2:
-            embed.set_author(name = 'Among Us Manager - Additional Commands: | Page 2 / 3')
+            embed.set_author(name = 'Among Us Manager - Game Settings: | Page 2 / 4')
+            embed.add_field(name="📝 Game Settings:", value = '''Each game has default settings to deafen on muting, display player vitals, and use reactions to control the muting. However, you can change these settings using `am.settings`. *Channel muting will not mute dead people because of discord rate limits.*''', inline = False)
+            embed.add_field(name='⚙️‍ Setting commands:', value ='''`am.settings` - display game settings.''', inline = False)
+            embed.add_field(name='🔇 Muting:', value ='''`am.settings deafen` - deafen on muting.
+                                                        \n`am.settings mute` - deafen on muting.
+                                                        \n`am.settings move` - move channels on muting. You need to set a dead channel for this setting.
+                                                        \n`am.channel <channel>` - set dead channel. *Leave <channel> blank to create new channel*''', inline = False)
+            embed.add_field(name="🖥️ Interface:", value = '''`am.settings show` - show player vitals.
+                                                            \n`am.settings hide` - only show player list.''', inline = False)
+            embed.add_field(name="🎮 Controls:", value = '''`am.settings reactions` - use reactions to control muting.
+                                                           \n`am.settings host` - bot follows host's personal muting. Automatically changes muting setting to mute.''', inline = False)
+
+        #Additional (3)
+        elif pgNum == 3:
+            embed.set_author(name = 'Among Us Manager - Other Commands: | Page 3 / 4')
             embed.add_field(name="🛑 Ending commands:", value = '''`am.endgame` - ends the game in the voice channel.
                                                                  \n`am.leave` - leave game.''', inline = False)
             embed.add_field(name='👨‍⚖️ Management commands:', value ='''`am.promote <@user>` - promotes player to host.
@@ -60,9 +73,9 @@ class DefaultCommands(commands.Cog):
                                                             \n`am.controls` - default Among Us keybinds.
                                                             \n`am.tip <imposter OR crewmate>` - returns random tip.''', inline = False)
 
-        #All commands (3)
-        elif pgNum == 3:
-            embed.set_author(name = 'Among Us Manager - Full List: | Page 3 / 3')
+        #All commands (4)
+        elif pgNum == 4:
+            embed.set_author(name = 'Among Us Manager - Full List: | Page 4 / 4')
 
             #Starting commands
             embed.add_field(name='Getting started:',value='''`am.start <code>` - host new game in current voice channel. Only one game is allowed in each voice channel. *Code optional*
