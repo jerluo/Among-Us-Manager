@@ -100,7 +100,7 @@ class ManagementCommands(commands.Cog):
                     description = 'Reinvite bot to regain bot permissions or check text channel permissions.\nUse `am.info` to get invite link.'
                 )
                 permEmbed.set_author(name = 'Missing permissions!')
-                await ctx.send(permEmbed)
+                await ctx.send(embed=permEmbed)
                 return
             except discord.errors.HTTPException:
                 await ctx.send("Error creating voice channel.")

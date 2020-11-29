@@ -20,7 +20,7 @@ class DefaultCommands(commands.Cog):
 
         embed = discord.Embed(
             colour = discord.Colour.orange(),
-            description = '**| Pg 1: Quick Start | Pg 2: Game Settings | Pg 3: Other Commands | Pg 4: Full List |**'
+            description = '**| Pg 1: Quick Start | Pg 2: Game Settings | Pg 3: Other Commands |**'
         )
 
         embed.set_footer(text = 'Created by Jerry#5922',)
@@ -35,7 +35,7 @@ class DefaultCommands(commands.Cog):
             embed.set_author(name = 'Among Us Manager - Quick Start: | Page 1 / 4')
             embed.add_field(name= '📝 Bot description', value="""This bot uses 'games' in voice channels and an 'interface' message with reactions to manage muting. The muting is done by deafening users.
                                                                 \n***Things to know:***
-                                                                \n**•** Every discord server can only handle 10 voice changes (muting or deafening) every ~5 seconds. If you missclick and surpass this limit there will be a 5 second delay (by Discord) until the next voice changes happen.
+                                                                  **•** Discord rate limits every discord server to 10 voice changes every ~5 seconds. If you missclick and surpass this limit there will be a 5 second throttle until the next voice changes go through.
                                                                 \n**•** The bot has a routine restart every 24 hours; if your game is deleted and commands stop working, simply create a new game.""", inline = False)
             embed.add_field(name = '▶️ Start new game', value='''`am.start <code>` - host new game in current voice channel. *Code optional*
                                                                 \n`am.joinall` - joins everyone in the voice channel into the game.
@@ -43,11 +43,11 @@ class DefaultCommands(commands.Cog):
             embed.add_field(name = '🛠️ Host commands', value='''\n`am.round   or 🔇` - mute everyone alive (tasks).
                                                                 \n`am.meeting or 📢` - unmutes everyone alive (meeting).
                                                                 \n`am.lobby   or ⏮` - restart game (lobby). Sets everyone alive and unmutes all.''', inline = False)
-            embed.add_field(name='🧑 Player commands',value='''`am.dead or ☠` - toggle status to dead: lets you hear everyone during rounds.''', inline = False)
+            embed.add_field(name='🧑 Player commands',value='''`am.dead or ☠` - toggle status to dead.''', inline = False)
 
         elif pgNum == 2:
             embed.set_author(name = 'Among Us Manager - Game Settings: | Page 2 / 4')
-            embed.add_field(name="📝 Game Settings:", value = '''Each game has default settings to deafen on muting, display player vitals, and use reactions to control the muting. However, you can change these settings using `am.settings`. *Channel muting will not mute dead people because of discord rate limits.*''', inline = False)
+            embed.add_field(name="📝 Game Settings:", value = '''Each game has default settings to deafen on muting, display player vitals, and use reactions to control the muting. However, you can change these settings using `am.settings`. *Channel muting will not mute dead people due to discord rate limits.*''', inline = False)
             embed.add_field(name='⚙️‍ Setting commands:', value ='''`am.settings` - display game settings.''', inline = False)
             embed.add_field(name='🔇 Muting:', value ='''`am.settings deafen` - deafen on muting.
                                                         \n`am.settings mute` - deafen on muting.
@@ -72,6 +72,9 @@ class DefaultCommands(commands.Cog):
                                                             \n`am.map <map>` - detailed map.
                                                             \n`am.controls` - default Among Us keybinds.
                                                             \n`am.tip <imposter OR crewmate>` - returns random tip.''', inline = False)
+            embed.add_field(name="Information:", value = '''`am.prefix <prefix>` - change the prefix used to call the bot.
+                                                            \n`am.info` - github link and invite link.
+                                                            \n`am.vote` - vote to support the bot!''')
 
         #All commands (4)
         elif pgNum == 4:
