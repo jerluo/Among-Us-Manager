@@ -72,7 +72,6 @@ class Events(commands.Cog):
         elif reaction == '⏮':
             await gamecommand.changeStage(game, player, Stage.Lobby)
 
-
     @commands.Cog.listener()
     async def on_voice_state_update(self, member, before, after):
         #Variables needed
@@ -133,7 +132,7 @@ class Events(commands.Cog):
         #MISSING PERMISSIONS
         elif isinstance(error, discord.errors.Forbidden):
             try:
-                channel = ctx.author.dm_channel
+                channel = ctx.author.dm_channel()
             except:
                 channel = await ctx.author.create_dm()
 
