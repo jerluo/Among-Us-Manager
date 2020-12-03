@@ -29,12 +29,13 @@ class Events(commands.Cog):
         print('Bot is ready.')
 
     @commands.Cog.listener()
-    async def on_reaction_add(self, reaction, user):
+    async def on_raw_reaction_add(self, payload):
+        user = payload.member
         #Make sure reaction isn't from bot
         if user == self.client.user:
             return
 
-        reaction = str(reaction)
+        reaction = str(payload.emoji)
 
         #Make sure reaction is releated to the game
         if reaction != '☠' and reaction != '📢' and reaction != '🔇' and reaction != '⏮':
@@ -70,6 +71,7 @@ class Events(commands.Cog):
         #Meeting reaction
         elif reaction == '⏮':
             await gamecommand.changeStage(game, player, Stage.Lobby)
+
 
     @commands.Cog.listener()
     async def on_voice_state_update(self, member, before, after):
@@ -131,7 +133,7 @@ class Events(commands.Cog):
         #MISSING PERMISSIONS
         elif isinstance(error, discord.errors.Forbidden):
             try:
-                channel = ctx.author.dm_channel()
+                channel = ctx.author.dm_channel
             except:
                 channel = await ctx.author.create_dm()
 
