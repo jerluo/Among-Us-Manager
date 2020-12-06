@@ -1,4 +1,14 @@
+import psycopg2
 
+DATABASE_URL = os.environ.get('DATABASE_URL')
+
+#LOAD DATABASE
+try:
+    global conn, c
+    conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+    c = conn.cursor()
+except:
+    print("Failed to connect to database")
 
 games = {}
 

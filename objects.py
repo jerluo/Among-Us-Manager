@@ -1,6 +1,7 @@
 import discord
 import datetime
 import enum
+from GameManager import *
 
 class Stage(enum.Enum):
     Lobby = 1
@@ -42,7 +43,7 @@ class Player:
 
 class Game:
 
-    def __init__(self, voiceChannel, textChannel, host, code):
+    def __init__(self, voiceChannel, textChannel, host, code, mute, interface, control):
 
         self.voiceChannel = voiceChannel #main voice channel (identifier)
         self.deadVC = None #dead voice channel (moving)
@@ -57,9 +58,9 @@ class Game:
         self.cooldown = False #cooldown on actions
 
         #Settings
-        self.muteSetting = Muting.Deafen
-        self.interfaceSetting = Interface.Show
-        self.controlSetting = Controls.Reactions
+        self.muteSetting = mute
+        self.interfaceSetting = interface
+        self.controlSetting = control
 
     def getTime(self):
         return self.timestamp

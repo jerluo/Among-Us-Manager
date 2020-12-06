@@ -32,8 +32,8 @@ class DefaultCommands(commands.Cog):
 
         #Quick start (1)
         if page is None or pgNum == 1:
-            embed.set_author(name = 'Among Us Manager - Quick Start: | Page 1 / 4')
-            embed.add_field(name= '📝 Bot description', value="""This bot uses 'games' in voice channels and an 'interface' message with reactions to manage muting. The muting is done by deafening users.
+            embed.set_author(name = 'Among Us Manager - Quick Start: | Page 1 / 3')
+            embed.add_field(name= '📝 Bot description', value="""This bot uses 'games' in voice channels and an 'interface' message with reactions to manage muting. Each game has game settings that are personalizable for how you want to play the game.
                                                                 \n***Things to know:***
                                                                   **•** Discord rate limits every discord server to 10 voice changes every ~5 seconds. If you missclick and surpass this limit there will be a 5 second throttle until the next voice changes go through.
                                                                 \n**•** The bot has a routine restart every 24 hours; if your game is deleted and commands stop working, simply create a new game.""", inline = False)
@@ -43,15 +43,16 @@ class DefaultCommands(commands.Cog):
             embed.add_field(name = '🛠️ Host commands', value='''\n`am.round   or 🔇` - mute everyone alive (tasks).
                                                                 \n`am.meeting or 📢` - unmutes everyone alive (meeting).
                                                                 \n`am.lobby   or ⏮` - restart game (lobby). Sets everyone alive and unmutes all.''', inline = False)
-            embed.add_field(name='🧑 Player commands',value='''`am.dead or ☠` - toggle status to dead.''', inline = False)
+            embed.add_field(name='🧑 Player commands',value='''`am.dead or ☠` - toggle status to dead.
+                                                              \n`am.join` - join game in the voice channel''', inline = False)
 
         elif pgNum == 2:
-            embed.set_author(name = 'Among Us Manager - Game Settings: | Page 2 / 4')
+            embed.set_author(name = 'Among Us Manager - Game Settings: | Page 2 / 3')
             embed.add_field(name="📝 Game Settings:", value = '''Each game has default settings to deafen on muting, display player vitals, and use reactions to control the muting. However, you can change these settings using `am.settings`. *Channel muting will not mute dead people due to discord rate limits.*''', inline = False)
             embed.add_field(name='⚙️‍ Setting commands:', value ='''`am.settings` - display game settings.''', inline = False)
-            embed.add_field(name='🔇 Muting:', value ='''`am.settings deafen` - deafen on muting.
-                                                        \n`am.settings mute` - deafen on muting.
-                                                        \n`am.settings move` - move channels on muting. You need to set a dead channel for this setting.
+            embed.add_field(name='🔇 Muting:', value ='''`am.settings deafen` - deafen everyone alive during rounds.
+                                                        \n`am.settings mute` - mute during rounds.
+                                                        \n`am.settings move` - move dead player channels during round. You need to set a dead channel for this setting.
                                                         \n`am.channel <channel>` - set dead channel. *Leave <channel> blank to create new channel*''', inline = False)
             embed.add_field(name="🖥️ Interface:", value = '''`am.settings show` - show player vitals.
                                                             \n`am.settings hide` - only show player list.''', inline = False)
@@ -60,20 +61,20 @@ class DefaultCommands(commands.Cog):
 
         #Additional (3)
         elif pgNum == 3:
-            embed.set_author(name = 'Among Us Manager - Other Commands: | Page 3 / 4')
+            embed.set_author(name = 'Among Us Manager - Other Commands: | Page 3 / 3')
             embed.add_field(name="🛑 Ending commands:", value = '''`am.endgame` - ends the game in the voice channel.
                                                                  \n`am.leave` - leave game.''', inline = False)
             embed.add_field(name='👨‍⚖️ Management commands:', value ='''`am.promote <@user>` - promotes player to host.
                                                                  \n`am.kick <@user>` - removes player from game.
                                                                  \n`am.update` - resend interface.
                                                                  \n`am.code <code>` - change the code.''', inline = False)
-
             embed.add_field(name='📚 Wiki commands:', value = '''`am.wiki` - link to the Wiki.
                                                             \n`am.map <map>` - detailed map.
                                                             \n`am.controls` - default Among Us keybinds.
                                                             \n`am.tip <imposter OR crewmate>` - returns random tip.''', inline = False)
-            embed.add_field(name="Information:", value = '''`am.prefix <prefix>` - change the prefix used to call the bot.
-                                                            \n`am.info` - github link and invite link.
+            embed.add_field(name='🗳️ Special commands: vote at `am.vote` to use', value = '''`am.prefix <prefix>` - change the prefix used to call the bot.
+                                                            \n`am.default` - set game settings of current game to be the default game settings used to create new games in your server.''', inline = False)
+            embed.add_field(name="ℹ️ Information:", value = '''`am.info` - github link and invite link.
                                                             \n`am.vote` - vote to support the bot!''')
 
         #All commands (4)
