@@ -22,6 +22,68 @@ class StartCommands(commands.Cog):
               startall - start and joinall
     '''
 
+    def muteDefault(self, guildID):
+        try:
+            sql_query = '''SELECT * FROM prefixes
+                            WHERE id = (%s)'''
+            c.execute(sql_query, (guildID,))
+            setting = c.fetchone()
+
+            if setting is None:
+                return Muting.Deafen
+
+            else:
+                default = setting[2]
+                if default == "Mute":
+                    return Muting.Mute
+                elif default == "Deafen":
+                    return Muting.Deafen
+                elif default == "Move":
+                    return Muting.Move
+
+        except:
+            return Muting.Deafen
+
+    def interfaceDefault(self, guildID):
+        try:
+            sql_query = '''SELECT * FROM prefixes
+                            WHERE id = (%s)'''
+            c.execute(sql_query, (guildID,))
+            setting = c.fetchone()
+
+            if setting is None:
+                return Interface.Show
+
+            else:
+                default = setting[3]
+                if default == "Show":
+                    return Interface.Show
+                elif defualt == "Hide":
+                    return Interface.Hide
+
+        except:
+            return Interface.Show
+
+    def controlDefault(self, guildID):
+        try:
+            sql_query = '''SELECT * FROM prefixes
+                            WHERE id = (%s)'''
+            c.execute(sql_query, (guildID,))
+            setting = c.fetchone()
+
+            if setting is None:
+                return Controls.Reactions
+
+            else:
+                default = setting[4]
+                if default == "Reactions":
+                    return Controls.Reactions
+                elif defualt == "Host":
+                    return Controls.Host
+
+        except:
+            return Controls.Reactions
+
     @commands.command()
     async def startall(self, ctx, code=None):
         if code == None:
@@ -51,9 +113,13 @@ class StartCommands(commands.Cog):
         host = ctx.message.author
         voiceChannel = ctx.message.author.voice.channel
         textChannel = ctx.message.channel
+        guildID = ctx.message.guild.id
+        mute = self.muteDefault(guildID)
+        interface = self.interfaceDefault(guildID)
+        control = self.controlDefault(guildID)
 
         #Create game
-        game = Game(voiceChannel, textChannel, host, code)
+        game = Game(voiceChannel, textChannel, host, code, mute, interface, control)
         #Send game
         await manage.sendEmbed(game, textChannel)
 
