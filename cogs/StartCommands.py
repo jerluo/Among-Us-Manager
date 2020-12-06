@@ -58,7 +58,7 @@ class StartCommands(commands.Cog):
                 default = setting[3]
                 if default == "Show":
                     return Interface.Show
-                elif defualt == "Hide":
+                elif default == "Hide":
                     return Interface.Hide
 
         except:
@@ -78,7 +78,7 @@ class StartCommands(commands.Cog):
                 default = setting[4]
                 if default == "Reactions":
                     return Controls.Reactions
-                elif defualt == "Host":
+                elif default == "Host":
                     return Controls.Host
 
         except:
