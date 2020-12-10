@@ -1,0 +1,7 @@
+{
+  "name": "Among Us Manager bot",
+  "description": "A discord bot to manage muting",
+  "repository": "https://github.com/jerryluoaustin/Among-Us-Manager",
+  "logo": "https://i.imgur.com/K6V81tr.png",
+  "keywords": ["discord", "bot"]
+}
