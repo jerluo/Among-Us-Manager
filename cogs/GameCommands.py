@@ -212,6 +212,7 @@ class GameCommands(commands.Cog):
 
                 #Alive actions
                 if status == True:
+                    #Mute them if we're in a round
                     if member.voice.mute != aliveBool:
                         await member.edit(mute = aliveBool)
 
@@ -235,12 +236,14 @@ class GameCommands(commands.Cog):
                 game.setCooldown(False)
                 return
 
-        for member in deadPlayers:
-            try:
-                if member.voice.mute != False:
-                    await member.edit(mute = False)
-            except:
-                continue
+        #Unmute dead players unless we're in a meeting.
+        if stage != Stage.Meeting:
+            for member in deadPlayers:
+                try:
+                    if member.voice.mute != False:
+                        await member.edit(mute = False)
+                except:
+                    continue
 
     async def changeMute(self, game, textChannel, stage, permEmbed):
         #If lobby
