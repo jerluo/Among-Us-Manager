@@ -26,6 +26,12 @@ class Events(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         await self.client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="am.help"))
+        guildList = self.bot.guilds
+        members = 0
+        for g in guildList:
+            members += g.member_count
+
+        print(members)    
         print('Bot is ready.')
 
     @commands.Cog.listener()
