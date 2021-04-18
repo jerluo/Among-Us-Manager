@@ -11,7 +11,7 @@ KEY = os.environ.get('KEY')
 
 #INTENTS
 intents = discord.Intents.default()
-intents.members = True
+#intents.members = True
 intents.typing = False
 
 def get_prefix(client, message):
